@@ -12,6 +12,9 @@ class Condition:
         self.comparator = comparator
         self.data = data
 
+    def __bool__(self) -> bool:
+        return False
+
     def __str__(self) -> str:
         return f"{self.column.name} {self.comparator.value} {self.column.type.encode(self.data)}"
 

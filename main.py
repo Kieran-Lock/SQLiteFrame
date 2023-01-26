@@ -37,7 +37,7 @@ set_person = Person.set({
     (Person.first_name == "Kieran") & (Person.last_name == "Lock")
 )
 select_car = Person.select(Person.first_name, Person.last_name, Car.name, Car.brand).join(
-    Car, Car.brand == "Nissan"
+    Car, Car.owner == Person.national_insurance_number
 )
 
 

@@ -44,11 +44,10 @@ class Table:
         for name, column in column_information:
             yield self.amend_column(name, column)
 
-    @staticmethod
-    def amend_column(column_name: str, column_type: Type | type | ForeignKey) -> Column:
+    def amend_column(self, column_name: str, column_type: Type | type | ForeignKey) -> Column:
         if isinstance(column_type, type):  # Plain Key
             column_type = column_type()
-        return Column(column_name, column_type)
+        return Column(self, column_name, column_type)
 
     def set(self, data: dict[ColumnT, ColumnT.type.decoded_type]) -> Set:
         for column in data:
@@ -68,14 +67,13 @@ class Table:
 
     def select(self, *columns: Column | Literal[Wildcards.All], distinct: bool = False) -> Select:
         if Wildcards.All in columns:
-            columns = self.columns
-        columns = sorted(list(columns), key=lambda column: self.columns.index(column))
+            columns = [Wildcards.All.value]
         return Select(self, list(columns), distinct=distinct)
 
-    def delete_from(self):
+    def delete_from(self) -> DeleteFrom:
         return DeleteFrom(self)
 
-    def drop_table(self):
+    def drop_table(self) -> DropTable:
         return DropTable(self)
 
     def __getitem__(self, item: ColumnT.type.decoded_type) -> ColumnT.type.decoded_type:

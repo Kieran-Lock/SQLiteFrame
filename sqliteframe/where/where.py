@@ -9,8 +9,7 @@ class Where:
         self.syntax = ["(", *syntax, ")"]
 
     def __str__(self):
-        syntax = map(lambda part: part.value if isinstance(part, Conjunctions) else
-                     part.sql_name() if isinstance(part, Condition) else part, self.syntax)
+        syntax = map(lambda part: part.value if isinstance(part, Conjunctions) else str(part), self.syntax)
         return " ".join(syntax).replace("( ", "(").replace(" )", ")")
 
     def __or__(self, other: object):
