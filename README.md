@@ -37,7 +37,7 @@ SQLiteFrame is available on [PyPI](https://pypi.org/project/SQLiteFrame). Simply
 pip install SQLiteFrame
 ```
 
-To install specific previous versions, take a look at the [version history](https://github.com/Kieran-Lock/SQLiteFrame/releases), locate the create version _(vX.Y.Z)_, and run
+To install specific previous versions, take a look at the [version history](https://github.com/Kieran-Lock/SQLiteFrame/releases), locate the create version `(vX.Y.Z)`, and run
 ```
 pip install SQLiteFrame==X.Y.Z
 ```
