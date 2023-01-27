@@ -7,16 +7,19 @@ if False:
 
 
 class Condition:
-    def __init__(self, column: Column, comparator: Comparisons, data: object):
-        self.column = column
+    def __init__(self, left: Column, comparator: Comparisons, right: Column | object):
+        self.left = left
         self.comparator = comparator
-        self.data = data
+        self.right = right
 
-    def __bool__(self) -> bool:
+    def __bool__(self) -> bool:  # Needed for __contains__ checks
         return False
 
     def __str__(self) -> str:
-        return f"{self.column.name} {self.comparator.value} {self.column.type.encode(self.data)}"
+        column_t = type(self.left)  # Because importing Column properly would cause a circular import
+        right = f"{self.right.table}.{self.right.name}" if isinstance(self.right, column_t) else \
+            self.left.type.encode(self.right)
+        return f"{self.left.table}.{self.left.name} {self.comparator.value} {right}"
 
     def __or__(self, other: object) -> Where:
         return self.combine(other, Conjunctions.OR)

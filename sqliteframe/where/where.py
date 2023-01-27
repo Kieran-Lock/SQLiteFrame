@@ -8,17 +8,17 @@ class Where:
     def __init__(self, *syntax: Condition | Conjunctions):
         self.syntax = ["(", *syntax, ")"]
 
-    def __str__(self):
+    def __str__(self) -> str:
         syntax = map(lambda part: part.value if isinstance(part, Conjunctions) else str(part), self.syntax)
         return " ".join(syntax).replace("( ", "(").replace(" )", ")")
 
-    def __or__(self, other: object):
+    def __or__(self, other: Where | Condition) -> Where:
         return self.combine(other, Conjunctions.OR)
 
-    def __and__(self, other: object):
+    def __and__(self, other: Where | Condition) -> Where:
         return self.combine(other, Conjunctions.AND)
 
-    def combine(self, other: object, conjunction: Conjunctions):
+    def combine(self, other: Where | Condition, conjunction: Conjunctions) -> Where:
         from .condition import Condition  # TODO: Clean Up Improper Import
         if not (isinstance(other, Condition) or isinstance(other, Where)):
             raise TypeError(f"Cannot join Condition with type '{type(other)}'") from None

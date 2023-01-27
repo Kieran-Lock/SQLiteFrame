@@ -1,7 +1,7 @@
 from __future__ import annotations
 from .statement import Statement
 from .wildcards import Wildcards
-from ..where import Where, Join
+from ..where import Where, Join, Condition
 
 if False:
     from ..table import Column, Table
@@ -26,14 +26,14 @@ class Select(Statement):
         where_section = "" if self.where_statement is None else f"\nWHERE {self.where_statement}"
         return f"SELECT{distinct_section} {columns_section}\nFROM {self.table}{join_section}{where_section};"
 
-    def where(self, where: Where) -> Select:
+    def where(self, where: Where | Condition) -> Select:
         if self.where_statement is None:
             self.where_statement = where
         else:
             self.where_statement &= where
         return self
 
-    def join(self, table: Table, where: Where) -> Select:
+    def join(self, table: Table, where: Where | Condition) -> Select:
         joined_columns = set(filter(lambda column: column not in [wildcard.value for wildcard in Wildcards],
                                     set(self.columns) - set(self.table.columns)))
         original_columns = set(self.columns) - joined_columns

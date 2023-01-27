@@ -40,7 +40,6 @@ select_car = Person.select(Person.first_name, Person.last_name, Car.name, Car.br
     Car, Car.owner == Person.national_insurance_number
 )
 
-
 with database.connection():
     insert_person_1.execute()
     insert_person_2.execute()
