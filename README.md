@@ -32,14 +32,14 @@ Add about information here...
 <!-- GETTING STARTED -->
 ## Getting Started
 
-SQLiteFrame is available on [PyPI](pypi-url). Simply install the package into your project environment with PIP
+SQLiteFrame is available on [PyPI](https://pypi.org/project/SQLiteFrame). Simply install the package into your project environment with PIP
 ```
 pip install SQLiteFrame
 ```
 
-To install specific previous versions, take a look at the [version history](version-history), find the version number _(vX.Y.Z)_, and run
+To install specific previous versions, take a look at the [version history](https://github.com/Kieran-Lock/SQLiteFrame/releases), locate the create version _(vX.Y.Z)_, and run
 ```
-pip install SQLiteFrame=X.Y.Z
+pip install SQLiteFrame==X.Y.Z
 ```
 
 SQLiteFrame has **ZERO** external dependencies - it uses only the standard library's `sqlite3` to execute SQLite commands.
@@ -53,7 +53,7 @@ SQLiteFrame has **ZERO** external dependencies - it uses only the standard libra
 
 Add usage examples and explanations here...
 
-_For more examples, please refer to the [Documentation](docs-url)_
+_For more examples, please refer to the [Documentation](https://github.com/Kieran-Lock/SQLiteFrame/blob/master/DOCUMENTATION.md)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -62,13 +62,6 @@ _For more examples, please refer to the [Documentation](docs-url)_
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See [LICENSE](license-url) for more information.
+Distributed under the MIT License. See [LICENSE](https://github.com/Kieran-Lock/SQLiteFrame/blob/master/LICENSE) for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-[pypi-url]: https://pypi.org/project/SQLiteFrame
-[docs-url]: https://github.com/Kieran-Lock/SQLiteFrame/blob/master/DOCUMENTATION.md
-[license-url]: https://github.com/Kieran-Lock/SQLiteFrame/blob/master/LICENSE
