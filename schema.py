@@ -9,7 +9,7 @@ class Person:
     national_insurance_number = String(primary_key=True)
     first_name = String
     last_name = String
-    age = Integer
+    date_of_birth = Date
 
 
 @Table(database)

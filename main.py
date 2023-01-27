@@ -1,19 +1,19 @@
 from schema import Person, Car, database
 from pprint import pprint
-from sqliteframe import Wildcards
+from datetime import date
 
 
 insert_person_1 = Person.insert_into({
     Person.national_insurance_number: "1234-Child",
     Person.first_name: "Anonymous",
     Person.last_name: "Name",
-    Person.age: 17
+    Person.date_of_birth: date(2005, 4, 20)
 })
 insert_person_2 = Person.insert_into({
     Person.national_insurance_number: "5678-Adult",
     Person.first_name: "John",
     Person.last_name: "Doe",
-    Person.age: 23
+    Person.date_of_birth: date(2000, 1, 24)
 })
 insert_car_1 = Car.insert_into({
     Car.number_plate: "AB12 345",
@@ -32,10 +32,9 @@ insert_car_2 = Car.insert_into({
     Car.owner: Person["5678-Adult"]
 })
 set_person = Person.set({
-    Person.national_insurance_number: "1234-Adult",
-    Person.age: 18
+    Person.national_insurance_number: "1234-Adult"
 }).where(
-    (Person.first_name == "Kieran") & (Person.last_name == "Lock")
+    (Person.first_name == "Anonymous") & (Person.last_name == "Name")
 )
 select_car = Person.select(Person.first_name, Person.last_name, Car.brand, Car.price).join(
     Car, Car.owner == Person.national_insurance_number
