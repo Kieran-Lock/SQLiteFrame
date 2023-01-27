@@ -3,7 +3,7 @@ from typing import Iterator
 from sqlite3 import Cursor
 if False:
     from typing import TypeVar
-    from ..table import Column
+    from sqliteframe.table import Column
     ColumnT = TypeVar("ColumnT", bound=Column)
 
 

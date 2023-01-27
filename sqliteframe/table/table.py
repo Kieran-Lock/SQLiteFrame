@@ -1,10 +1,11 @@
 from __future__ import annotations
-from typing import TypeVar, Literal
+from typing import TypeVar, Literal, Iterable
 from pprint import pformat
 from inspect import getmembers, isroutine
 from .column import Column
 from ..types import Type
-from ..statements import InsertInto, Set, CreateTable, Select, DeleteFrom, DropTable, Wildcards
+from ..statements import InsertInto, Set, CreateTable, Select, DeleteFrom, DropTable
+from ..wildcards import Wildcards
 from ..foreign_key import ForeignKey
 if False:
     from ..database import Database
@@ -49,6 +50,11 @@ class Table:
             column_type = column_type()
         return Column(self, column_name, column_type)
 
+    def sort_columns(self, columns: Iterable[Column | Wildcards | str]):
+        if Wildcards.All in columns:
+            return self.columns
+        return list(sorted(columns, key=lambda column: self.columns.index(column)))
+
     def set(self, data: dict[ColumnT, ColumnT.type.decoded_type]) -> Set:
         for column in data:
             if not column.is_nullable and data[column] is None:
@@ -67,7 +73,7 @@ class Table:
 
     def select(self, *columns: Column | Literal[Wildcards.All], distinct: bool = False) -> Select:
         if Wildcards.All in columns:
-            columns = [Wildcards.All.value]
+            columns = [Wildcards.All]
         return Select(self, list(columns), distinct=distinct)
 
     def delete_from(self) -> DeleteFrom:

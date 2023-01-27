@@ -1,5 +1,6 @@
 from schema import Person, Car, database
 from pprint import pprint
+from sqliteframe import Wildcards
 
 
 insert_person_1 = Person.insert_into({
@@ -36,8 +37,10 @@ set_person = Person.set({
 }).where(
     (Person.first_name == "Kieran") & (Person.last_name == "Lock")
 )
-select_car = Person.select(Person.first_name, Person.last_name, Car.name, Car.brand).join(
+select_car = Person.select(Person.first_name, Person.last_name, Car.brand, Car.price).join(
     Car, Car.owner == Person.national_insurance_number
+).where(
+    Car.name == "FR-V"
 )
 
 with database.connection():

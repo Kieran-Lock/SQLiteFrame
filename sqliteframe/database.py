@@ -3,8 +3,9 @@ from dataclasses import dataclass, field
 from contextlib import contextmanager
 from sqlite3 import connect, Cursor, Connection
 from .table import Table
-from .statements import Statement, Pragma, Result
+from .statements import Statement, Pragma
 from .pragma import PragmaStatements, PragmaStates
+from .result import Result
 
 
 @dataclass(eq=True, slots=True)
