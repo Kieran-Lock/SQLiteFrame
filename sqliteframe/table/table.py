@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import TypeVar, Literal, Iterable
+from typing import TypeVar, Literal, Iterable, Optional
 from pprint import pformat
 from inspect import getmembers, isroutine
 from .column import Column
@@ -50,10 +50,12 @@ class Table:
             column_type = column_type()
         return Column(self, column_name, column_type)
 
-    def sort_columns(self, columns: Iterable[Column | Wildcards | str]):
+    def sort_columns(self, columns: Iterable[Column | Wildcards],
+                     base_columns_override: Optional[list[Column]] = None) -> list:
+        base_columns = self.columns if base_columns_override is None else base_columns_override
         if Wildcards.All in columns:
-            return self.columns
-        return list(sorted(columns, key=lambda column: self.columns.index(column)))
+            return base_columns
+        return sorted(columns, key=lambda column: base_columns.index(column))
 
     def set(self, data: dict[ColumnT, ColumnT.type.decoded_type]) -> Set:
         for column in data:

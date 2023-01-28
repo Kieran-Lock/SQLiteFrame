@@ -38,10 +38,11 @@ class Select(Statement):
         if Wildcards.All in self.passed_columns:
             self.columns = self.columns + table.columns if join_type == JoinTypes.LEFT else table.columns + self.columns
         else:
-            joined_columns = set(self.columns) - set(self.table.columns)
-            original_columns = set(self.columns) - joined_columns
-            self.columns = table.sort_columns(joined_columns) + self.table.sort_columns(original_columns) if \
-                join_type == JoinTypes.LEFT else \
-                self.table.sort_columns(original_columns) + table.sort_columns(joined_columns)
+            joined_columns = table.sort_columns(set(self.columns) - set(self.table.columns),
+                                                base_columns_override=self.passed_columns)
+            original_columns = self.table.sort_columns(set(self.columns) - set(joined_columns),
+                                                       base_columns_override=self.passed_columns)
+            self.columns = joined_columns + original_columns if join_type == JoinTypes.LEFT else \
+                original_columns + joined_columns
         self.join_statements.append(Join(table, where, join_type))
         return self

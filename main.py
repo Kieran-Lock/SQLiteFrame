@@ -1,6 +1,7 @@
 from schema import Person, Car, database
 from pprint import pprint
 from datetime import date
+from sqliteframe import JoinTypes
 
 
 insert_person_1 = Person.insert_into({
@@ -36,8 +37,8 @@ set_person = Person.set({
 }).where(
     (Person.first_name == "Anonymous") & (Person.last_name == "Name")
 )
-select_car = Person.select(Person.first_name, Person.last_name, Car.brand, Car.price).join(
-    Car, Car.owner == Person.national_insurance_number
+select_car = Person.select(Person.last_name, Car.brand, Person.first_name, Car.price).join(
+    Car, Car.owner == Person.national_insurance_number, join_type=JoinTypes.LEFT
 ).where(
     Car.name == "FR-V"
 )
