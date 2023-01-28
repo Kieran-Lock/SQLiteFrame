@@ -1,6 +1,7 @@
 from __future__ import annotations
 from .statement import Statement
-from sqliteframe.wildcards.wildcards import Wildcards
+from ..wildcards import Wildcards
+from ..order_by import OrderBy, OrderTypes
 from ..where import Where, Condition
 from ..join import Join, JoinTypes
 
@@ -19,13 +20,16 @@ class Select(Statement):
         self.distinct = distinct
         self.where_statement = None
         self.join_statements = []
+        self.order_by_statement = None
 
     def build_sql(self) -> str:
         distinct_section = " DISTINCT" if self.distinct else ""
         columns_section = ", ".join(map(lambda column: column.name, self.columns))
         join_section = ("\n" + "\n".join(map(str, self.join_statements))) if self.join_statements else ""
         where_section = "" if self.where_statement is None else f"\nWHERE {self.where_statement}"
-        return f"SELECT{distinct_section} {columns_section}\nFROM {self.table}{join_section}{where_section};"
+        order_by_section = "" if self.order_by_statement is None else f"\n{self.order_by_statement}"
+        return f"SELECT{distinct_section} {columns_section}\n" \
+               f"FROM {self.table}{join_section}{where_section}{order_by_section};"
 
     def where(self, where: Where | Condition) -> Select:
         if self.where_statement is None:
@@ -45,4 +49,9 @@ class Select(Statement):
             self.columns = joined_columns + original_columns if join_type == JoinTypes.LEFT else \
                 original_columns + joined_columns
         self.join_statements.append(Join(table, where, join_type))
+        return self
+
+    def order_by(self, column: Column,
+                 order_types: OrderTypes | tuple[OrderTypes, ...] = OrderTypes.ASCENDING) -> Select:
+        self.order_by_statement = OrderBy(column, order_types)
         return self

@@ -5,3 +5,4 @@ from .wildcards import Wildcards
 from .foreign_key import ForeignKey, Restraints as FKRestraints
 from .result import Result
 from .join import JoinTypes
+from .order_by import OrderTypes
