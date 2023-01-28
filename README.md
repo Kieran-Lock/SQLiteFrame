@@ -14,7 +14,7 @@
     ·
     <a href="#usage">Basic Usage</a>
     ·
-    <a href="#license">License</a>
+    <a href="https://github.com/Kieran-Lock/SQLiteFrame/blob/master/LICENSE">License</a>
   </p>
 </div>
 
