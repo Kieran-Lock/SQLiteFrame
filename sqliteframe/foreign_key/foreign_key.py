@@ -1,10 +1,9 @@
 from __future__ import annotations
-from typing import TypeVar
+from typing import TypeVar, Type as TypeT
 from .restraints import Restraints
 from ..types import Type
 if False:
     from ..table import Table, Column
-    TableT = TypeVar("TableT", bound=Table)
 
 
 EncodedT = TypeVar("EncodedT")
@@ -12,7 +11,7 @@ DecodedT = TypeVar("DecodedT")
 
 
 class ForeignKey(Type[EncodedT, DecodedT]):
-    def __init__(self, table: TableT, on_update: Restraints = Restraints.CASCADE,
+    def __init__(self, table: Table, on_update: Restraints = Restraints.CASCADE,
                  on_delete: Restraints = Restraints.RESTRICT, nullable: bool = False):
         self.table = table
         self.foreign_column = list(filter(lambda column: column.is_primary_key, self.table.columns))[0]
