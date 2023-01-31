@@ -1,5 +1,7 @@
 <a id="readme-top"></a> 
 
+
+
 <!-- PROJECT SUMMARY -->
 <br />
 <div align="center">
@@ -50,8 +52,8 @@ SQLiteFrame has **ZERO** external dependencies - it uses only the standard libra
 
 
 
-<!-- USAGE EXAMPLES -->
-## Usage
+<!-- BASIC USAGE EXAMPLES -->
+## Basic Usage
 
 ### Creating a table
 To create a table, use the template below. This will automatically run the CreateTable SQLite command for you:
