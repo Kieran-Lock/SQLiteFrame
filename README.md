@@ -1,7 +1,7 @@
 <!-- PROJECT SUMMARY -->
 <br />
 <div align="center">
-  <img src="https://github.com/Kieran-Lock/SQLiteFrame/blob/master/logo.gif" alt="Logo">
+  <img src="https://github.com/Kieran-Lock/SQLiteFrame/blob/master/sqliteframe_logo.gif" alt="Logo">
   <br />
   
   <p align="center">
