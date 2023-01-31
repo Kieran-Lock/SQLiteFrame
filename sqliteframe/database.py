@@ -16,10 +16,14 @@ class Database:
     tables: set[Table] = field(init=False, default_factory=set)
     db_connection: Optional[Connection] = field(init=False, default=None)
     cursor: Optional[Cursor] = field(init=False, default=None)
-    connected: bool = field(init=False, default=False)
+    connections: bool = field(init=False, default=0)
 
     def add_table(self, table: Table):
         self.tables.add(table)
+
+    @property
+    def connected(self) -> bool:
+        return self.connections > 0
 
     @property
     def foreign_keys_enabled(self) -> bool:
@@ -39,9 +43,10 @@ class Database:
 
     def connect(self) -> Connection:
         if self.connected:
+            self.connections += 1
             return self.db_connection
         self.db_connection = connect(self.path)
-        self.connected = True
+        self.connections += 1
         self.cursor = self.db_connection.cursor()
         if self.foreign_keys:
             self.enable_foreign_keys()
@@ -49,10 +54,11 @@ class Database:
 
     def disconnect(self) -> None:
         if not self.connected:
-            raise RuntimeError(f"Could not disconnect without a pre-established connection") from None
-        self.db_connection.close()
-        self.db_connection = None
-        self.connected = False
+            raise RuntimeError(f"Could not disconnect without a pre-established connection") from None#
+        self.connections -= 1
+        if not self.connected:
+            self.db_connection.close()
+            self.db_connection = None
 
     def commit(self) -> None:
         if not self.connected:
@@ -61,20 +67,21 @@ class Database:
 
     @contextmanager
     def connection(self, commit: bool = True) -> Generator[Connection, None, None]:
-        if not self.connected:
-            self.connect()
+        print(f"Initiating: {self.connections + 1}")
+        self.connect()
         try:
             yield self.db_connection
         finally:
+            print(f"Closing: {self.connections}")
             if commit:
                 self.commit()
-            if self.connected:
-                self.disconnect()
+            self.disconnect()
 
     def execute(self, statement: Statement | str) -> Cursor:
         if not self.connected:
+            statement = statement if isinstance(statement, str) else f"'{statement.__class__.__name__}' statement"
             raise RuntimeError(
-                f"Could not execute '{statement.__class__.__name__}' statement without connection") from None
+                f"Could not execute {statement} without connection") from None
         if self.output:
             print(statement)
         return self.cursor.execute(str(statement))
