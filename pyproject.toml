@@ -1,7 +1,7 @@
 [project]
 name = "SQLiteFrame"
 description = "A lightweight, zero-dependency ORM for SQLite in Python"
-version = "0.1.1"
+version = "0.1.2"
 authors = [
     { name = "Kieran Lock", email = "kieran.lock@outlook.com" }
 ]
