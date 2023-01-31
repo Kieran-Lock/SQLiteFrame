@@ -8,6 +8,8 @@ if False:
 
 
 class Statement(ABC):
+    INDETERMINATE = lambda: "Indeterminate"
+
     def __init__(self, database: Database, yield_column_factory: Callable[[], list[Column]] = lambda: []):
         self.database = database
         self.yield_column_factory = yield_column_factory
@@ -20,4 +22,6 @@ class Statement(ABC):
         return ""
 
     def execute(self) -> Result:
-        return Result(self.yield_column_factory(), self.database.execute(self))
+        yield_columns = self.yield_column_factory()
+        return Result(yield_columns, self.database.execute(self),
+                      indeterminate=self.yield_column_factory is self.__class__.INDETERMINATE)

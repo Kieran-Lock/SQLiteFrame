@@ -25,7 +25,7 @@ class Database:
     def foreign_keys_enabled(self) -> bool:
         if not self.connected:
             raise RuntimeError(f"Could not check FK status without a pre-established connection") from None
-        return bool(Pragma(PragmaStatements.FOREIGN_KEYS).execute())
+        return bool(Pragma(self, PragmaStatements.FOREIGN_KEYS).execute())
 
     def enable_foreign_keys(self) -> Result:
         if not self.connected:
@@ -71,7 +71,7 @@ class Database:
             if self.connected:
                 self.disconnect()
 
-    def execute(self, statement: Statement) -> Cursor:
+    def execute(self, statement: Statement | str) -> Cursor:
         if not self.connected:
             raise RuntimeError(
                 f"Could not execute '{statement.__class__.__name__}' statement without connection") from None

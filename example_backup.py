@@ -72,6 +72,7 @@ select_car = Person.select(Person.last_name, Car.name, Person.first_name, Car.pr
     Car.date_purchased, (OrderTypes.DESCENDING, OrderTypes.NULLS_FIRST)
 )
 
+
 with database.connection():
     insert_person_1.execute()
     insert_person_2.execute()

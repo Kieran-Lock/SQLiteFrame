@@ -9,7 +9,8 @@ if False:
 class Pragma(Statement):
     def __init__(self, database: Database, pragma_statement: PragmaStatements,
                  pragma_value: Optional[str] = None, pragma_type: PragmaTypes = PragmaTypes.SET):
-        super().__init__(database)
+        yield_column_factory = None if pragma_type == PragmaTypes.QUERY else self.__class__.INDETERMINATE
+        super().__init__(database, yield_column_factory=yield_column_factory)
         self.statement = pragma_statement
         self.value = pragma_value
         self.type = pragma_type
