@@ -4,7 +4,7 @@ from contextlib import contextmanager
 from sqlite3 import connect, Cursor, Connection
 from .table import Table
 from .statements import Statement, Pragma
-from .pragma import PragmaStatements, PragmaStates
+from .pragma import PragmaStatements
 from .result import Result
 
 
@@ -30,12 +30,12 @@ class Database:
     def enable_foreign_keys(self) -> Result:
         if not self.connected:
             raise RuntimeError(f"Could not enable FKs without a pre-established connection") from None
-        return Result([], self.execute(Pragma(PragmaStatements.FOREIGN_KEYS, PragmaStates.ON)))
+        return Result([], self.execute(Pragma(self, PragmaStatements.FOREIGN_KEYS, pragma_value="ON")))
 
     def disable_foreign_keys(self) -> Result:
         if not self.connected:
             raise RuntimeError(f"Could not disabled FKs without a pre-established connection") from None
-        return Result([], self.execute(Pragma(PragmaStatements.FOREIGN_KEYS, PragmaStates.OFF)))
+        return Result([], self.execute(Pragma(self, PragmaStatements.FOREIGN_KEYS, pragma_value="OFF")))
 
     def connect(self) -> Connection:
         if self.connected:

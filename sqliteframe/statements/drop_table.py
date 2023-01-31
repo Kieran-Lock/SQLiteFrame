@@ -6,7 +6,8 @@ if False:
 
 class DropTable(Statement):
     def __init__(self, table: Table):
-        super().__init__(table)
+        super().__init__(table.database)
+        self.table = table
 
     def build_sql(self) -> str:
         return f"DROP TABLE IF EXISTS {self.table};"

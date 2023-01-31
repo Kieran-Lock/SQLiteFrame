@@ -11,7 +11,8 @@ if False:
 
 class Select(Statement):
     def __init__(self, table: Table, columns: list[Column | Wildcards], distinct: bool = False):
-        super().__init__(table, yield_column_factory=lambda: self.columns)
+        super().__init__(table.database, yield_column_factory=lambda: self.columns)
+        self.table = table
         if not filter(lambda column: column not in [wildcard.value for wildcard in Wildcards],
                       set(columns) - set(self.table.columns)):
             columns = set(sorted(columns, key=lambda column: self.table.columns.index(column)))

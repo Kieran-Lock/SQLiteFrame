@@ -8,7 +8,8 @@ if False:
 
 class InsertInto(Statement):
     def __init__(self, table: Table, data: dict[ColumnT, ColumnT.type.decoded_type]):
-        super().__init__(table)
+        super().__init__(table.database)
+        self.table = table
         self.data = data.items()
 
     def build_sql(self) -> str:

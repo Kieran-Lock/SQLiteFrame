@@ -7,7 +7,8 @@ if False:
 
 class DeleteFrom(Statement):
     def __init__(self, table: Table):
-        super().__init__(table)
+        super().__init__(table.database)
+        self.table = table
         self.where_statement = None
 
     def build_sql(self) -> str:

@@ -1,2 +1,2 @@
 from .statements import Statements as PragmaStatements
-from .states import States as PragmaStates
+from .types import Types as PragmaTypes

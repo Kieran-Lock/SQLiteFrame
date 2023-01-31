@@ -6,7 +6,8 @@ if False:
 
 class CreateTable(Statement):
     def __init__(self, table: Table, columns: list[Column]):
-        super().__init__(table)
+        super().__init__(table.database)
+        self.table = table
         self.columns = columns
         self.foreign_key_columns = list(filter(lambda column: column.is_foreign_key, self.columns))
 
