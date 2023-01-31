@@ -22,8 +22,8 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-Add about information here...
+SQLiteFrame is an SQLite ORM for python, designed to be as lightweight, intuitive, and simple to use as possible.  
+It is designed to closely mimic SQL syntax whilst remaining as pythonic as possible to save developers valuable time _(and brain cells)_ when interacting with SQLite databases, by building reusable SQLite query objects using method-chaining, and abstracting away SQLite's **devilish** connection and cursor system with context-managers.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -32,12 +32,12 @@ Add about information here...
 <!-- GETTING STARTED -->
 ## Getting Started
 
-SQLiteFrame is available on [PyPI](https://pypi.org/project/SQLiteFrame). Simply install the package into your project environment with PIP
+SQLiteFrame is available on [PyPI](https://pypi.org/project/SQLiteFrame). Simply install the package into your project environment with PIP:
 ```
 pip install SQLiteFrame
 ```
 
-To install specific previous versions, take a look at the [version history](https://github.com/Kieran-Lock/SQLiteFrame/releases), locate the create version `(vX.Y.Z)`, and run
+To install specific previous versions, take a look at the [version history](https://github.com/Kieran-Lock/SQLiteFrame/releases), locate the version tag `(vX.Y.Z)`, and run:
 ```
 pip install SQLiteFrame==X.Y.Z
 ```
