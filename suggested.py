@@ -1,13 +1,8 @@
-"""from sqliteframe import Database, Table, String, Integer
-
-
-database = Database("")
-
-
 @Table(database)
 class __EFMigrationsHistory:
 	MigrationId = String(primary_key=True)
 	ProductVersion = String
+
 
 @Table(database)
 class CarClasses:
@@ -19,10 +14,12 @@ class CarClasses:
 	UserCreated = Integer
 	UserUpdated = Integer
 
+
 @Table(database)
 class sqlite_sequence:
-	name = NoneType(nullable=True)
-	seq = NoneType(nullable=True)
+	name = Blob(nullable=True)
+	seq = Blob(nullable=True)
+
 
 @Table(database)
 class Championships:
@@ -30,10 +27,10 @@ class Championships:
 	UniqueName = String(nullable=True)
 	Name = String(nullable=True)
 	BaseChampionshipString = String(nullable=True)
-	GamesRaw = NoneType(nullable=True)
-	CarsRaw = NoneType(nullable=True)
-	TeamsRaw = NoneType(nullable=True)
-	TracksRaw = NoneType(nullable=True)
+	GamesRaw = Blob(nullable=True)
+	CarsRaw = Blob(nullable=True)
+	TeamsRaw = Blob(nullable=True)
+	TracksRaw = Blob(nullable=True)
 	DefaultCarId = Integer(nullable=True)
 	DefaultCarStringId = String(nullable=True)
 	RacesCount = Integer
@@ -57,6 +54,7 @@ class Championships:
 	UserCreated = Integer
 	UserUpdated = Integer
 
+
 @Table(database)
 class Games:
 	Id = Integer(primary_key=True)
@@ -73,10 +71,11 @@ class Games:
 	UserCreated = Integer
 	UserUpdated = Integer
 
+
 @Table(database)
 class Images:
 	Id = Integer(primary_key=True)
-	PngRaw = NoneType(nullable=True)
+	PngRaw = Blob(nullable=True)
 	Length = Integer
 	Name = String(nullable=True)
 	NameUnique = String(nullable=True)
@@ -86,6 +85,7 @@ class Images:
 	UpdatedAt = Integer
 	UserCreated = Integer
 	UserUpdated = Integer
+
 
 @Table(database)
 class LeagueCategories:
@@ -99,6 +99,7 @@ class LeagueCategories:
 	UserCreated = Integer
 	UserUpdated = Integer
 
+
 @Table(database)
 class LeagueSettings:
 	Id = Integer(primary_key=True)
@@ -110,6 +111,7 @@ class LeagueSettings:
 	Type = String(nullable=True)
 	Value = String(nullable=True)
 
+
 @Table(database)
 class Nationalities:
 	Id = Integer(primary_key=True)
@@ -119,6 +121,7 @@ class Nationalities:
 	UpdatedAt = Integer
 	UserCreated = Integer
 	UserUpdated = Integer
+
 
 @Table(database)
 class Users:
@@ -132,13 +135,14 @@ class Users:
 	UserCreated = Integer
 	UserUpdated = Integer
 
+
 @Table(database)
 class PointActions:
 	Id = Integer(primary_key=True)
 	ActionType = Integer
 	DriverPointsRaw = Integer
 	TeamPointsRaw = Integer
-	ChampionshipId = ForeignKey(Championships, nullable=True, on_update=FKRestraints.NO ACTION)
+	ChampionshipId = ForeignKey(Championships, nullable=True, on_update=FKRestraints.NO_ACTION)
 	SessionType = Integer
 	SessionPosition = Integer(nullable=True)
 	RaceType = Integer(nullable=True)
@@ -148,13 +152,14 @@ class PointActions:
 	UserCreated = Integer
 	UserUpdated = Integer
 
+
 @Table(database)
 class Seasons:
 	Id = Integer(primary_key=True)
 	Name = String(nullable=True)
 	FullName = String(nullable=True)
-	ChampionshipId = ForeignKey(Championships, nullable=True, on_update=FKRestraints.NO ACTION)
-	LeagueCategoryId = ForeignKey(LeagueCategories, nullable=True, on_update=FKRestraints.NO ACTION)
+	ChampionshipId = ForeignKey(Championships, nullable=True, on_update=FKRestraints.NO_ACTION)
+	LeagueCategoryId = ForeignKey(LeagueCategories, nullable=True, on_update=FKRestraints.NO_ACTION)
 	TimeOffsetType = Integer
 	Priority = Integer
 	IsArchive = Integer
@@ -189,6 +194,7 @@ class Seasons:
 	UserUpdated = Integer
 	IsDnfDriversCanBeClassified = Integer(default=0)
 
+
 @Table(database)
 class Drivers:
 	Id = Integer(primary_key=True)
@@ -201,11 +207,11 @@ class Drivers:
 	SteamLink = String(nullable=True)
 	BadgeName = String(nullable=True)
 	BadgeIcons = String(nullable=True)
-	NationId = ForeignKey(Nationalities, nullable=True, on_update=FKRestraints.NO ACTION)
+	NationId = ForeignKey(Nationalities, nullable=True, on_update=FKRestraints.NO_ACTION)
 	LeagueRole = Integer
 	RaceNumber = Integer(nullable=True)
 	NationIngameId = Integer(nullable=True)
-	LeagueCategoriesRaw = NoneType(nullable=True)
+	LeagueCategoriesRaw = Blob(nullable=True)
 	IsArchive = Integer
 	CreatedAt = Integer
 	UpdatedAt = Integer
@@ -213,6 +219,7 @@ class Drivers:
 	UserUpdated = Integer
 	Description = String(nullable=True)
 	GamePlatform = Integer(default=0)
+
 
 @Table(database)
 class Tracks:
@@ -224,7 +231,7 @@ class Tracks:
 	Years = String(nullable=True)
 	TrackLayout = Integer
 	TrackType = Integer
-	NationId = ForeignKey(Nationalities, on_update=FKRestraints.NO ACTION)
+	NationId = ForeignKey(Nationalities, on_update=FKRestraints.NO_ACTION)
 	Length = Integer
 	NumberTurns = Integer
 	RaceLapRecordTimeInt = Integer
@@ -235,16 +242,18 @@ class Tracks:
 	UserCreated = Integer
 	UserUpdated = Integer
 
+
 @Table(database)
 class Vendors:
 	Id = Integer(primary_key=True)
 	UniqueName = String(nullable=True)
 	Name = String(nullable=True)
-	NationId = ForeignKey(Nationalities, on_update=FKRestraints.NO ACTION)
+	NationId = ForeignKey(Nationalities, on_update=FKRestraints.NO_ACTION)
 	CreatedAt = Integer
 	UpdatedAt = Integer
 	UserCreated = Integer
 	UserUpdated = Integer
+
 
 @Table(database)
 class SessionResults:
@@ -259,14 +268,14 @@ class SessionResults:
 	SessionStatus = Integer
 	CompletedStatus = Integer
 	IsSkip = Integer
-	FastestLapDriverId = ForeignKey(Drivers, nullable=True, on_update=FKRestraints.NO ACTION)
+	FastestLapDriverId = ForeignKey(Drivers, nullable=True, on_update=FKRestraints.NO_ACTION)
 	FastestLapDriverName = String(nullable=True)
 	FastestLapTimeInt = Integer
 	FastestLapNumLap = Integer
 	FastestLapValidFlags = Integer
-	DriverDayDriverId = ForeignKey(Drivers, nullable=True, on_update=FKRestraints.NO ACTION)
+	DriverDayDriverId = ForeignKey(Drivers, nullable=True, on_update=FKRestraints.NO_ACTION)
 	DriverDayDriverName = String(nullable=True)
-	BestMomentDriverId = ForeignKey(Drivers, nullable=True, on_update=FKRestraints.NO ACTION)
+	BestMomentDriverId = ForeignKey(Drivers, nullable=True, on_update=FKRestraints.NO_ACTION)
 	BestMomentDriverName = String(nullable=True)
 	LiveId = Integer
 	LiveStartDate = String
@@ -283,7 +292,7 @@ class SessionResults:
 	TrackTemperature = Integer
 	TotalLaps = Integer
 	SessionDuration = String
-	SessionDetailsRaw = NoneType(nullable=True)
+	SessionDetailsRaw = Blob(nullable=True)
 	QualificationType = Integer
 	CreatedAt = Integer
 	UpdatedAt = Integer
@@ -292,13 +301,14 @@ class SessionResults:
 	IsLiveFullRecord = Integer(default=0)
 	LiveRecordPercent = Integer(default=0)
 
+
 @Table(database)
 class Events:
 	Id = Integer(primary_key=True)
 	Name = String(nullable=True)
 	FullName = String(nullable=True)
 	ShortName = String(nullable=True)
-	TrackId = ForeignKey(Tracks, on_update=FKRestraints.NO ACTION)
+	TrackId = ForeignKey(Tracks, on_update=FKRestraints.NO_ACTION)
 	Date = String
 	CompletedStatus = Integer
 	EventStatus = Integer
@@ -309,19 +319,21 @@ class Events:
 	UserCreated = Integer
 	UserUpdated = Integer
 
+
 @Table(database)
 class Cars:
 	Id = Integer(primary_key=True)
 	UniqueName = String(nullable=True)
 	Name = String(nullable=True)
-	CarClassId = ForeignKey(CarClasses, on_update=FKRestraints.NO ACTION)
-	VendorId = ForeignKey(Vendors, nullable=True, on_update=FKRestraints.NO ACTION)
+	CarClassId = ForeignKey(CarClasses, on_update=FKRestraints.NO_ACTION)
+	VendorId = ForeignKey(Vendors, nullable=True, on_update=FKRestraints.NO_ACTION)
 	Year = Integer
 	Power = Integer
 	CreatedAt = Integer
 	UpdatedAt = Integer
 	UserCreated = Integer
 	UserUpdated = Integer
+
 
 @Table(database)
 class Teams:
@@ -330,19 +342,20 @@ class Teams:
 	FullName = String(nullable=True)
 	UniqueName = String(nullable=True)
 	Abbreviation = String(nullable=True)
-	CarId = ForeignKey(Cars, nullable=True, on_update=FKRestraints.NO ACTION)
-	NationId = ForeignKey(Nationalities, nullable=True, on_update=FKRestraints.NO ACTION)
+	CarId = ForeignKey(Cars, nullable=True, on_update=FKRestraints.NO_ACTION)
+	NationId = ForeignKey(Nationalities, nullable=True, on_update=FKRestraints.NO_ACTION)
 	Position = Integer(nullable=True)
 	ColorRaw = Integer
 	Badge = String(nullable=True)
 	Prestige = Integer
 	Year = Integer
 	Seats = Integer
-	PrevTeamId = ForeignKey(Teams, nullable=True, on_update=FKRestraints.NO ACTION)
+	PrevTeamId = ForeignKey(Teams, nullable=True, on_update=FKRestraints.NO_ACTION)
 	CreatedAt = Integer
 	UpdatedAt = Integer
 	UserCreated = Integer
 	UserUpdated = Integer
+
 
 @Table(database)
 class DriverSessions:
@@ -350,10 +363,10 @@ class DriverSessions:
 	SessionResultId = Integer
 	Position = Integer
 	ClassificationPosition = Integer
-	DriverId = ForeignKey(Drivers, nullable=True, on_update=FKRestraints.NO ACTION)
+	DriverId = ForeignKey(Drivers, nullable=True, on_update=FKRestraints.NO_ACTION)
 	DriverName = String(nullable=True)
-	TeamId = ForeignKey(Teams, nullable=True, on_update=FKRestraints.NO ACTION)
-	CarId = ForeignKey(Cars, nullable=True, on_update=FKRestraints.NO ACTION)
+	TeamId = ForeignKey(Teams, nullable=True, on_update=FKRestraints.NO_ACTION)
+	CarId = ForeignKey(Cars, nullable=True, on_update=FKRestraints.NO_ACTION)
 	TeamName = String(nullable=True)
 	SeatType = Integer
 	Status = Integer
@@ -378,27 +391,27 @@ class DriverSessions:
 	LapsCount = Integer
 	GridPosition = Integer
 	PitsCount = Integer
-	DriverSessionsDetailsRaw = NoneType(nullable=True)
+	DriverSessionsDetailsRaw = Blob(nullable=True)
 	CreatedAt = Integer
 	UpdatedAt = Integer
 	UserCreated = Integer
 	UserUpdated = Integer
 	LiveId = Integer(nullable=True)
 
+
 @Table(database)
 class LineUps:
 	Id = Integer(primary_key=True)
 	LineupsBasedType = Integer
 	SeatType = Integer
-	TeamId = ForeignKey(Teams, nullable=True, on_update=FKRestraints.NO ACTION)
-	CarId = ForeignKey(Cars, nullable=True, on_update=FKRestraints.NO ACTION)
-	DriverId = ForeignKey(Drivers, nullable=True, on_update=FKRestraints.NO ACTION)
+	TeamId = ForeignKey(Teams, nullable=True, on_update=FKRestraints.NO_ACTION)
+	CarId = ForeignKey(Cars, nullable=True, on_update=FKRestraints.NO_ACTION)
+	DriverId = ForeignKey(Drivers, nullable=True, on_update=FKRestraints.NO_ACTION)
 	SeatPosition = Integer
 	ReservePosition = Integer
 	Badge = String(nullable=True)
-	SeasonId = ForeignKey(Seasons, on_update=FKRestraints.NO ACTION)
+	SeasonId = ForeignKey(Seasons, on_update=FKRestraints.NO_ACTION)
 	CreatedAt = Integer
 	UpdatedAt = Integer
 	UserCreated = Integer
 	UserUpdated = Integer
-"""

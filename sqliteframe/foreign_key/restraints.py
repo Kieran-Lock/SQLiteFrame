@@ -6,3 +6,4 @@ class Restraints(Enum):
     SET_DEFAULT = "SET DEFAULT"
     RESTRICT = "RESTRICT"
     CASCADE = "CASCADE"
+    NO_ACTION = "NO ACTION"

@@ -1,18 +1,19 @@
 from typing import Generator
-from sqliteframe import Database, Pragma, PragmaStatements, PragmaTypes, Database, FKRestraints, \
-    Boolean, Date, Integer, String, Time
+from sqliteframe import Pragma, PragmaStatements, PragmaTypes, Database, FKRestraints, Types
 from sqlite3 import Cursor
 
 
 class SuggestedColumn:
-    TYPES_DICTIONARY = {sql_type.sql_name(): sql_type for sql_type in (
-        Boolean(), Date(), Integer(), String(), Time()
-    )}
-    FOREIGN_KEY_TYPE = "FK"
+    TYPES_DICTIONARY = {**{sql_type.sql_name(): sql_type for sql_type in
+                           [sql_type.value() for sql_type in Types]}, **{"": Types.Blob.value()}}  # No type --> BLOB
+    FK_RESTRAINTS = {restraint.value: restraint.name for restraint in FKRestraints}
 
     def __init__(self, name: str, sql_type: str, not_null: bool, default: object, primary_key: bool):
         self.name = name
         self.type = self.__class__.TYPES_DICTIONARY.get(sql_type)
+        print("Found:", self.type, type(self.type), repr(sql_type))
+        if self.type is None:
+            self.type = f"<{sql_type}>"
         self.is_nullable = not not_null
         self.default = default
         self.is_primary_key = primary_key
@@ -44,8 +45,10 @@ class SuggestedFKColumn(SuggestedColumn):
     def get_type_details(self) -> str:
         nullable = "nullable=True" if self.is_nullable else ""
         default = "" if self.default is None else f"default={self.default}"  # Likely not formatted at the moment
-        on_update = "" if self.on_update == FKRestraints.CASCADE.value else f"on_update=FKRestraints.{self.on_update}"
-        on_delete = "" if self.on_delete == FKRestraints.RESTRICT.value else f"on_delete=FKRestraints.{self.on_delete}"
+        on_update = "" if self.on_update == FKRestraints.CASCADE.value else \
+            f"on_update=FKRestraints.{self.__class__.FK_RESTRAINTS.get(self.on_update)}"
+        on_delete = "" if self.on_delete == FKRestraints.RESTRICT.value else \
+            f"on_delete=FKRestraints.{self.__class__.FK_RESTRAINTS.get(self.on_delete)}"
         seperator = ", " if any(filter(bool, (nullable, default, on_update, on_delete))) else ""
         return f"{self.ref_table}{seperator}{', '.join(filter(bool, (nullable, default, on_update, on_delete)))}"
 
@@ -66,13 +69,12 @@ class SuggestedTable:
         statement = Pragma(self.database, PragmaStatements.TABLE_INFO, self.name, PragmaTypes.CALL)
         for column in statement.execute():
             if column[1] in foreign_keys:  # 1:Name
-                print([*column[1:], *foreign_keys.get(column[1])])
                 yield SuggestedFKColumn(*[*column[1:], *foreign_keys.get(column[1])])
             else:
+                print(column)
                 yield SuggestedColumn(*column[1:])
 
     def get_foreign_keys(self) -> dict[str, tuple[str, str, str, str]]:
-        print("Executing this bit")
         statement = Pragma(self.database, PragmaStatements.FOREIGN_KEY_LIST, self.name, PragmaTypes.CALL)
         return {key[3]: (key[2], *key[5:7]) for key in statement.execute()}  # 2:Table, 3:Name, 5:On Update, 6:On Delete
 
@@ -84,16 +86,13 @@ class SuggestedSchema:
             self.tables = self.create_tables()
 
     def create_tables(self):
-        # for table in self.get_table_names():
-        #     print(table[0])
-        #     print(SuggestedTable(self.database, table[0]))
         return [SuggestedTable(self.database, table[0]) for table in [*self.get_table_names()]]
 
     def get_table_names(self) -> Cursor:
         return self.database.execute("SELECT tbl_name FROM sqlite_master WHERE type=\"table\";")
 
     def __str__(self) -> str:
-        return "\n\n".join(map(str, self.tables))
+        return "\n\n\n".join(map(str, self.tables)) + "\n"
 
 
 suggested_schema = SuggestedSchema(

@@ -67,12 +67,10 @@ class Database:
 
     @contextmanager
     def connection(self, commit: bool = True) -> Generator[Connection, None, None]:
-        print(f"Initiating: {self.connections + 1}")
         self.connect()
         try:
             yield self.db_connection
         finally:
-            print(f"Closing: {self.connections}")
             if commit:
                 self.commit()
             self.disconnect()
