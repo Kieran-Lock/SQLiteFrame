@@ -37,8 +37,8 @@ insert_car_2 = Car.insert_into({
     Car.brand: "Honda",
     Car.price: 6_300,
     Car.date_purchased: date(2022, 3, 16),
-    Car.supercar: False,
-    Car.owner: Person["5678-Adult"]
+    Car.owner: Person["5678-Adult"],
+    Car.reg_document: b"Honda FR-V Registration Document"
 })
 insert_car_3 = Car.insert_into({
     Car.number_plate: "KL56 MNO",
@@ -54,7 +54,6 @@ insert_car_4 = Car.insert_into({
     Car.name: "Cube",
     Car.brand: "Nissan",
     Car.price: 8_000,
-    Car.supercar: False,
     Car.owner: Person["9123-Adult"]
 })
 set_person = Person.set({
@@ -64,7 +63,7 @@ set_person = Person.set({
 }).where(
     (Person.first_name == "Anonymous") & (Person.last_name == "Anonymous")
 )
-select_car = Person.select(Person.last_name, Car.name, Person.first_name, Car.price).join(
+select_car = Person.select(Person.last_name, Car.name, Person.first_name, Car.price, Car.reg_document).join(
     Car, Car.owner == Person.national_insurance_number, join_type=JoinTypes.LEFT
 ).where(
     Car.brand == "Nissan"

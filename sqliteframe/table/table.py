@@ -73,7 +73,7 @@ class Table:
             if not column.is_nullable and data[column] is None:
                 raise ValueError(f"Non-nullable column '{column.name}' passed NULL") from None
         for column in set(self.columns) - set(data):
-            if not column.is_nullable:
+            if not column.is_nullable and column.default is None:
                 raise ValueError(f"Non-nullable column '{column.name}' passed NULL") from None
             data[column] = None
         return InsertInto(self, data)

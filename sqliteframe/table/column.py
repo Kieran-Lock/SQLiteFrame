@@ -25,6 +25,10 @@ class Column:
     def is_foreign_key(self):
         return isinstance(self.type, ForeignKey)
 
+    @property
+    def default(self):
+        return self.type.default
+
     def __str__(self) -> str:
         primary_key = " PRIMARY KEY" if self.is_primary_key else ""
         not_null = "" if self.is_nullable else " NOT NULL"
