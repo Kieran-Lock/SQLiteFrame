@@ -8,3 +8,4 @@ from .join import JoinTypes
 from .order_by import OrderTypes
 from .statements import Pragma
 from .pragma import PragmaTypes, PragmaStatements
+from .suggested_schema import SuggestedSchema

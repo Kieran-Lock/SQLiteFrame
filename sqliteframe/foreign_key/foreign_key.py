@@ -22,7 +22,7 @@ class ForeignKey(Type[EncodedT, DecodedT]):
 
     @cached_property
     def table(self) -> Table:
-        from ..table import Table
+        from ..table import Table  # TODO: Possibility of checking if __name__ is lambda instead?
         if not isinstance(self._table, Table):
             return self._table()
         return self._table

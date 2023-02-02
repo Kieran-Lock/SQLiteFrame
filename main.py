@@ -1,119 +1,88 @@
-"""from typing import Generator, TypeVar
-from sqliteframe import Pragma, PragmaStatements, PragmaTypes, Database, FKRestraints, Types, Type
-from sqlite3 import Cursor
+from schema import Person, Car, database
+from pprint import pprint
+from datetime import date
+from sqliteframe import JoinTypes, OrderTypes
 
 
-class UnknownType(Type[NotImplemented, NotImplemented]):
-    def encode(self, decoded: NotImplemented) -> NotImplemented:
-        return NotImplemented
-
-    def decode(self, encoded: NotImplemented) -> NotImplemented:
-        return NotImplemented
-
-    def default_suggestion(self, encoded: NotImplemented) -> str:
-        return "<UnknownType>"
-
-    def sql_name(self) -> str:
-        return NotImplemented
-
-
-class SuggestedColumn:
-    TYPES_DICTIONARY = {**{sql_type.sql_name(): sql_type for sql_type in
-                           [sql_type.value() for sql_type in Types]}, **{"": Types.Blob.value()}}  # No type --> BLOB
-    FK_RESTRAINTS = {restraint.value: restraint.name for restraint in FKRestraints}
-
-    def __init__(self, name: str, sql_type: str, not_null: bool, default: object, primary_key: bool):
-        self.name = name
-        self.type = self.__class__.TYPES_DICTIONARY.get(sql_type)
-        if self.type is None:
-            self.type = UnknownType()
-        self.is_nullable = not not_null
-        self.default = default
-        self.is_primary_key = primary_key
-        self.type_details = self.get_type_details()
-
-    def __str__(self) -> str:
-        return f"{self.name} = {self.type.__class__.__name__}{self.type_details}"
-
-    def get_type_details(self) -> str:
-        if self.default is None and not (self.is_nullable or self.is_primary_key):
-            return ""
-        nullable = "nullable=True" if self.is_nullable else ""
-        default = "" if self.default is None else f"default={self.default}"
-        primary_key = "primary_key=True" if self.is_primary_key else ""
-        return f"({', '.join(filter(bool, (nullable, default, primary_key)))})"
-
-
-class SuggestedFKColumn(SuggestedColumn):
-    def __init__(self, name: str, sql_type: str, not_null: bool, default: object, _: bool,
-                 ref_table: str, on_update: str, on_delete: str):
-        self.ref_table = ref_table
-        self.on_update = on_update
-        self.on_delete = on_delete
-        super().__init__(name, sql_type, not_null, default, False)
-
-    def __str__(self) -> str:
-        return f"{self.name} = ForeignKey({self.type_details})"
-
-    def get_type_details(self) -> str:
-        nullable = "nullable=True" if self.is_nullable else ""
-        default = "" if self.default is None else f"default={self.default}"  # Likely not formatted at the moment
-        on_update = "" if self.on_update == FKRestraints.CASCADE.value else \
-            f"on_update=FKRestraints.{self.__class__.FK_RESTRAINTS.get(self.on_update)}"
-        on_delete = "" if self.on_delete == FKRestraints.RESTRICT.value else \
-            f"on_delete=FKRestraints.{self.__class__.FK_RESTRAINTS.get(self.on_delete)}"
-        seperator = ", " if any(filter(bool, (nullable, default, on_update, on_delete))) else ""
-        return f"{self.ref_table}{seperator}{', '.join(filter(bool, (nullable, default, on_update, on_delete)))}"
-
-
-class SuggestedTable:
-    def __init__(self, database: Database, name: str):
-        self.database = database
-        self.name = name
-        with self.database.connection():
-            self.columns = [*sorted(self.get_columns(), key=lambda column: not column.is_primary_key)]
-
-    def __str__(self) -> str:
-        columns = "\n\t".join(map(str, self.columns))
-        return f"@Table(database)\nclass {self.name}:\n\t{columns}"
-
-    def get_columns(self) -> Generator[SuggestedColumn, None, None]:
-        foreign_keys = self.get_foreign_keys()
-        statement = Pragma(self.database, PragmaStatements.TABLE_INFO, self.name, PragmaTypes.CALL)
-        for column in statement.execute():
-            if column[1] in foreign_keys:  # 1:Name
-                yield SuggestedFKColumn(*column[1:], *foreign_keys.get(column[1]))
-            else:
-                print(column)
-                yield SuggestedColumn(*column[1:])
-
-    def get_foreign_keys(self) -> dict[str, tuple[str, str, str, str]]:
-        statement = Pragma(self.database, PragmaStatements.FOREIGN_KEY_LIST, self.name, PragmaTypes.CALL)
-        return {key[3]: (key[2], *key[5:7]) for key in statement.execute()}  # 2:Table, 3:Name, 5:On Update, 6:On Delete
+insert_person_1 = Person.insert_into({
+    Person.national_insurance_number: "1234-Child",
+    Person.first_name: "Anonymous",
+    Person.last_name: "Anonymous",
+    Person.date_of_birth: date(2005, 4, 20)
+})
+insert_person_2 = Person.insert_into({
+    Person.national_insurance_number: "5678-Adult",
+    Person.first_name: "John",
+    Person.last_name: "Doe",
+    Person.date_of_birth: date(2000, 1, 24)
+})
+insert_person_3 = Person.insert_into({
+    Person.national_insurance_number: "9123-Adult",
+    Person.first_name: "Mary",
+    Person.last_name: "Jane",
+    Person.date_of_birth: date(1987, 12, 2)
+})
+insert_car_1 = Car.insert_into({
+    Car.number_plate: "AB12 CDE",
+    Car.name: "Skyline R34",
+    Car.brand: "Nissan",
+    Car.price: 55_000,
+    Car.date_purchased: date(2020, 10, 29),
+    Car.supercar: True,
+    Car.owner: Person["1234-Child"]
+})
+insert_car_2 = Car.insert_into({
+    Car.number_plate: "FG34 HIJ",
+    Car.name: "FR-V",
+    Car.brand: "Honda",
+    Car.price: 6_300,
+    Car.date_purchased: date(2022, 3, 16),
+    Car.supercar: False,
+    Car.owner: Person["5678-Adult"]
+})
+insert_car_3 = Car.insert_into({
+    Car.number_plate: "KL56 MNO",
+    Car.name: "GTR R35",
+    Car.brand: "Nissan",
+    Car.price: 60_000,
+    Car.date_purchased: date(2010, 7, 9),
+    Car.supercar: True,
+    Car.owner: Person["1234-Child"]
+})
+insert_car_4 = Car.insert_into({
+    Car.number_plate: "PQ78 RST",
+    Car.name: "Cube",
+    Car.brand: "Nissan",
+    Car.price: 8_000,
+    Car.supercar: False,
+    Car.owner: Person["9123-Adult"]
+})
+set_person = Person.set({
+    Person.national_insurance_number: "1234-Adult",
+    Person.first_name: "Very",
+    Person.last_name: "Rich"
+}).where(
+    (Person.first_name == "Anonymous") & (Person.last_name == "Anonymous")
+)
+select_car = Person.select(Person.last_name, Car.name, Person.first_name, Car.price).join(
+    Car, Car.owner == Person.national_insurance_number, join_type=JoinTypes.LEFT
+).where(
+    Car.brand == "Nissan"
+).order_by(
+    Car.date_purchased, (OrderTypes.DESCENDING, OrderTypes.NULLS_FIRST)
+)
 
 
-class SuggestedSchema:
-    def __init__(self, database: Database):
-        self.database = database
-        with database.connection():
-            self.tables = self.create_tables()
-
-    def create_tables(self):
-        return [SuggestedTable(self.database, table[0]) for table in [*self.get_table_names()]]
-
-    def get_table_names(self) -> Cursor:
-        return self.database.execute("SELECT tbl_name FROM sqlite_master WHERE type=\"table\";")
-
-    def __str__(self) -> str:
-        return "from sqliteframe import ...\n\n\n" + "database = Database(\"...\")\n\n\n" + \
-            "\n\n\n".join(map(str, self.tables)) + "\n"
-
-
-suggested_schema = SuggestedSchema(
-    Database(r"D:/Applications/Installers/Racing League Tools/user/databases/TestLeague.db", output=True))
-with open("suggested.py", "w+") as f:
-    f.write(str(suggested_schema))
-"""
-
-
-from schema import *
+with database.connection():
+    insert_person_1.execute()
+    insert_person_2.execute()
+    insert_person_3.execute()
+    insert_car_1.execute()
+    insert_car_2.execute()
+    insert_car_3.execute()
+    insert_car_4.execute()
+    set_person.execute()
+    for record in select_car.execute():
+        pprint(record)
+    Car.drop_table().execute()
+    Person.drop_table().execute()
