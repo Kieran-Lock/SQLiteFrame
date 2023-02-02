@@ -14,9 +14,13 @@
     <a href="https://github.com/Kieran-Lock/SQLiteFrame/blob/master/DOCUMENTATION.md"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="#getting-started">Get Started</a>
+    <a href="#about-the-project">About the Project</a>
     ·
-    <a href="#usage">Basic Usage</a>
+    <a href="#getting-started">Getting Started</a>
+    ·
+    <a href="#basic-usage">Basic Usage</a>
+    ·
+    <a href="https://github.com/Kieran-Lock/SQLiteFrame/blob/master/DOCUMENTATION.md">Documentation</a>
     ·
     <a href="https://github.com/Kieran-Lock/SQLiteFrame/blob/master/LICENSE">License</a>
   </p>
@@ -25,7 +29,7 @@
 
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## About the Project
 SQLiteFrame is an SQLite ORM for python, designed to be as lightweight, intuitive, and simple to use as possible.  
 It is designed to closely mimic SQL syntax whilst remaining as pythonic as possible to save developers valuable time _(and brain cells)_ when interacting with SQLite databases, by building reusable SQLite query objects using method-chaining, and abstracting away SQLite's **devilish** connection and cursor system with _(pun intended)_ a single context manager.
 
