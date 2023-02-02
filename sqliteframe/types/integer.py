@@ -10,3 +10,6 @@ class Integer(Type[int, int]):
 
     def encode(self, decoded: int) -> int:
         return decoded
+
+    def default_suggestion(self, encoded: int) -> str:
+        return str(encoded)

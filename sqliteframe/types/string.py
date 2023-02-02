@@ -10,3 +10,6 @@ class String(Type[str, str]):
 
     def encode(self, decoded: str) -> str:
         return f"\"{decoded}\""
+
+    def default_suggestion(self, encoded: str) -> str:
+        return f"\"{encoded}\""

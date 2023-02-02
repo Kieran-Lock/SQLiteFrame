@@ -10,3 +10,6 @@ class Float(Type[float, float]):
 
     def encode(self, decoded: float) -> float:
         return decoded
+
+    def default_suggestion(self, encoded: float) -> str:
+        return str(encoded)

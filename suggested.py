@@ -1,3 +1,6 @@
+from sqliteframe import database, Table, String, Integer, Blob, ForeignKey, FKRestraints
+
+
 @Table(database)
 class __EFMigrationsHistory:
 	MigrationId = String(primary_key=True)

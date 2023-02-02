@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import TypeVar, Type as TypeT
+from typing import TypeVar, Optional
 from .restraints import Restraints
 from ..types import Type
 if False:
@@ -11,13 +11,13 @@ DecodedT = TypeVar("DecodedT")
 
 
 class ForeignKey(Type[EncodedT, DecodedT]):
-    def __init__(self, table: Table, on_update: Restraints = Restraints.CASCADE,
+    def __init__(self, table: Table, default: Optional[DecodedT], on_update: Restraints = Restraints.CASCADE,
                  on_delete: Restraints = Restraints.RESTRICT, nullable: bool = False):
         self.table = table
         self.foreign_column = list(filter(lambda column: column.is_primary_key, self.table.columns))[0]
         self.on_update = on_update
         self.on_delete = on_delete
-        super().__init__(nullable=nullable)
+        super().__init__(nullable=nullable, default=default)
 
     def sql_name(self) -> str:
         return self.foreign_column.type.sql_name()

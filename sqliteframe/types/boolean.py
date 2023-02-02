@@ -10,3 +10,6 @@ class Boolean(Type[int, bool]):
 
     def encode(self, decoded: bool) -> int:
         return 1 if decoded else 0
+
+    def default_suggestion(self, encoded: int) -> str:
+        return str(bool(encoded))

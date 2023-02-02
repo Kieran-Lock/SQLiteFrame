@@ -2,12 +2,15 @@ from sqlite3 import Binary
 from .type import Type
 
 
-class Blob(Type[Binary, bytes]):
+class Blob(Type[memoryview, bytes]):
     def sql_name(self) -> str:
         return "BLOB"
 
-    def decode(self, encoded: Binary) -> bytes:
+    def decode(self, encoded: memoryview) -> bytes:
         return str(encoded).encode()
 
-    def encode(self, decoded: bytes) -> Binary:
+    def encode(self, decoded: bytes) -> memoryview:
         return Binary(decoded)
+
+    def default_suggestion(self, encoded: memoryview) -> str:
+        return f"bf\"{encoded.tobytes()}\""

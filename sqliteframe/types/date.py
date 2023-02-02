@@ -11,3 +11,6 @@ class Date(Type[int, date]):
 
     def encode(self, decoded: date) -> int:
         return decoded.toordinal()
+
+    def default_suggestion(self, encoded: int) -> str:
+        return f"date({date.fromordinal(encoded).isoformat().replace('-', ', ')})"

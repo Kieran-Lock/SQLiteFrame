@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Generic, TypeVar, get_args, Literal, Callable, ClassVar
+from typing import Generic, TypeVar, get_args, Literal, Callable, ClassVar, Optional
 from dataclasses import dataclass
 from functools import wraps
 
@@ -8,17 +8,19 @@ EncodedT = TypeVar("EncodedT")
 DecodedT = TypeVar("DecodedT")
 
 
-# noinspection PyUnresolvedReferences
 @dataclass(eq=True, slots=True)
 class Type(Generic[EncodedT, DecodedT], ABC):
     NULL: ClassVar[Literal["NULL"]] = "NULL"
     primary_key: bool = False
     nullable: bool = False
+    default: Optional[DecodedT] = None
 
     def __post_init__(self):
         if self.nullable:
             self.encode = self.nullable_encode(self.encode)
             self.decode = self.nullable_decode(self.decode)
+        if self.default is not None:
+            self.encode = self.default_encode(self.encode)
 
     @abstractmethod
     def sql_name(self) -> str:
@@ -43,6 +45,15 @@ class Type(Generic[EncodedT, DecodedT], ABC):
     def __hash__(self):
         return hash(str(self))
 
+    def default_encode(self, f: Callable) -> Callable:
+        @wraps(f)
+        def wrapper(decoded: DecodedT | None) -> EncodedT | Literal["NULL"]:
+            if decoded is None:
+                return f(self.default)
+            return f(decoded)
+
+        return wrapper
+
     @staticmethod
     def nullable_encode(f: Callable) -> Callable:
         @wraps(f)
@@ -60,3 +71,7 @@ class Type(Generic[EncodedT, DecodedT], ABC):
                 return
             return f(encoded)
         return wrapper
+
+    @abstractmethod
+    def default_suggestion(self, encoded: EncodedT) -> str:
+        return ""

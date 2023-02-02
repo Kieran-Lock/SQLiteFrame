@@ -1,6 +1,20 @@
-from typing import Generator
-from sqliteframe import Pragma, PragmaStatements, PragmaTypes, Database, FKRestraints, Types
+from typing import Generator, TypeVar
+from sqliteframe import Pragma, PragmaStatements, PragmaTypes, Database, FKRestraints, Types, Type
 from sqlite3 import Cursor
+
+
+class UnknownType(Type[NotImplemented, NotImplemented]):
+    def encode(self, decoded: NotImplemented) -> NotImplemented:
+        return NotImplemented
+
+    def decode(self, encoded: NotImplemented) -> NotImplemented:
+        return NotImplemented
+
+    def default_suggestion(self, encoded: NotImplemented) -> str:
+        return "<UnknownType>"
+
+    def sql_name(self) -> str:
+        return NotImplemented
 
 
 class SuggestedColumn:
@@ -11,9 +25,8 @@ class SuggestedColumn:
     def __init__(self, name: str, sql_type: str, not_null: bool, default: object, primary_key: bool):
         self.name = name
         self.type = self.__class__.TYPES_DICTIONARY.get(sql_type)
-        print("Found:", self.type, type(self.type), repr(sql_type))
         if self.type is None:
-            self.type = f"<{sql_type}>"
+            self.type = UnknownType()
         self.is_nullable = not not_null
         self.default = default
         self.is_primary_key = primary_key
@@ -69,7 +82,7 @@ class SuggestedTable:
         statement = Pragma(self.database, PragmaStatements.TABLE_INFO, self.name, PragmaTypes.CALL)
         for column in statement.execute():
             if column[1] in foreign_keys:  # 1:Name
-                yield SuggestedFKColumn(*[*column[1:], *foreign_keys.get(column[1])])
+                yield SuggestedFKColumn(*column[1:], *foreign_keys.get(column[1]))
             else:
                 print(column)
                 yield SuggestedColumn(*column[1:])

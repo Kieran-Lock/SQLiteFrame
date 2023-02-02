@@ -10,3 +10,6 @@ class Null(Type[str, None]):
 
     def encode(self, decoded: None) -> str:
         return "NULL"
+
+    def default_suggestion(self, encoded: str) -> str:
+        return "None"
