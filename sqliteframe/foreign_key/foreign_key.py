@@ -1,5 +1,6 @@
 from __future__ import annotations
-from typing import TypeVar, Optional
+from functools import cached_property
+from typing import TypeVar, Optional, Callable
 from .restraints import Restraints
 from ..types import Type
 if False:
@@ -11,13 +12,24 @@ DecodedT = TypeVar("DecodedT")
 
 
 class ForeignKey(Type[EncodedT, DecodedT]):
-    def __init__(self, table: Table, default: Optional[DecodedT], on_update: Restraints = Restraints.CASCADE,
-                 on_delete: Restraints = Restraints.RESTRICT, nullable: bool = False):
-        self.table = table
-        self.foreign_column = list(filter(lambda column: column.is_primary_key, self.table.columns))[0]
+    def __init__(self, table: Table | Callable[[], Table], default: Optional[DecodedT] = None,
+                 on_update: Restraints = Restraints.CASCADE, on_delete: Restraints = Restraints.RESTRICT,
+                 nullable: bool = False):
+        self._table = table
         self.on_update = on_update
         self.on_delete = on_delete
         super().__init__(nullable=nullable, default=default)
+
+    @cached_property
+    def table(self) -> Table:
+        from ..table import Table
+        if not isinstance(self._table, Table):
+            return self._table()
+        return self._table
+
+    @cached_property
+    def foreign_column(self) -> Column:
+        return list(filter(lambda column: column.is_primary_key, self.table.columns))[0]
 
     def sql_name(self) -> str:
         return self.foreign_column.type.sql_name()
@@ -43,3 +55,6 @@ class ForeignKey(Type[EncodedT, DecodedT]):
     def __str__(self):
         not_null = "" if self.nullable else " NOT NULL"
         return f"{self.sql_name()}{not_null}"
+
+    def default_suggestion(self, encoded: EncodedT) -> str:
+        return "ForeignKey"

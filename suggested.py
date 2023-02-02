@@ -1,4 +1,7 @@
-from sqliteframe import database, Table, String, Integer, Blob, ForeignKey, FKRestraints
+from sqliteframe import ...
+
+
+database = Database("...")
 
 
 @Table(database)

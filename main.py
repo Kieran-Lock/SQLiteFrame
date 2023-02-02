@@ -1,4 +1,4 @@
-from typing import Generator, TypeVar
+"""from typing import Generator, TypeVar
 from sqliteframe import Pragma, PragmaStatements, PragmaTypes, Database, FKRestraints, Types, Type
 from sqlite3 import Cursor
 
@@ -105,10 +105,15 @@ class SuggestedSchema:
         return self.database.execute("SELECT tbl_name FROM sqlite_master WHERE type=\"table\";")
 
     def __str__(self) -> str:
-        return "\n\n\n".join(map(str, self.tables)) + "\n"
+        return "from sqliteframe import ...\n\n\n" + "database = Database(\"...\")\n\n\n" + \
+            "\n\n\n".join(map(str, self.tables)) + "\n"
 
 
 suggested_schema = SuggestedSchema(
     Database(r"D:/Applications/Installers/Racing League Tools/user/databases/TestLeague.db", output=True))
 with open("suggested.py", "w+") as f:
     f.write(str(suggested_schema))
+"""
+
+
+from schema import *

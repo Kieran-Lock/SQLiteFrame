@@ -16,8 +16,9 @@ ColumnT = TypeVar("ColumnT", bound=Column)
 
 
 class Table:
-    def __init__(self, database: Database):
+    def __init__(self, database: Database, auto_create: bool = True):
         self.database = database
+        self.auto_create = auto_create
         self.table_name = None
         self.columns = []
 
@@ -29,8 +30,12 @@ class Table:
                 raise NameError(f"Column name '{column.name}' cannot exist within a table") from None
             setattr(self, column.name, column)
             self.columns.append(column)
-        with self.database.connection():
-            CreateTable(self, self.columns).execute()
+        if self.auto_create:
+            with self.database.connection():
+                try:
+                    self.create_table().execute()
+                except NameError:
+                    raise ValueError("Cannot lazy-load foreign key with auto_create=True") from None
         return self
 
     def __repr__(self) -> str:
@@ -86,3 +91,6 @@ class Table:
 
     def __getitem__(self, item: ColumnT.type.decoded_type) -> ColumnT.type.decoded_type:
         return item
+
+    def create_table(self) -> CreateTable:
+        return CreateTable(self, self.columns)
