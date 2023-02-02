@@ -1,4 +1,4 @@
-from sqliteframe import Database, Table, String, Integer, Boolean, Date, Time, ForeignKey, Blob
+from sqliteframe import Database, Table, String, Boolean, Date, Time, ForeignKey, Blob, Float, Integer
 
 
 database = Database("database.db", output=True)
@@ -17,7 +17,8 @@ class Car:
     number_plate = String(primary_key=True)
     name = String
     brand = String
-    price = Integer
+    price = Float
+    seats = Integer(default=5)
     date_purchased = Date(nullable=True)
     time_purchased = Time(nullable=True)
     supercar = Boolean(default=False)

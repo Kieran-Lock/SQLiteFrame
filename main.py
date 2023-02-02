@@ -27,6 +27,7 @@ insert_car_1 = Car.insert_into({
     Car.name: "Skyline R34",
     Car.brand: "Nissan",
     Car.price: 55_000,
+    Car.seats: 4,
     Car.date_purchased: date(2020, 10, 29),
     Car.supercar: True,
     Car.owner: Person["1234-Child"]
@@ -36,6 +37,7 @@ insert_car_2 = Car.insert_into({
     Car.name: "FR-V",
     Car.brand: "Honda",
     Car.price: 6_300,
+    Car.seats: 6,
     Car.date_purchased: date(2022, 3, 16),
     Car.owner: Person["5678-Adult"],
     Car.reg_document: b"Honda FR-V Registration Document"
@@ -45,6 +47,7 @@ insert_car_3 = Car.insert_into({
     Car.name: "GTR R35",
     Car.brand: "Nissan",
     Car.price: 60_000,
+    Car.seats: 4,
     Car.date_purchased: date(2010, 7, 9),
     Car.supercar: True,
     Car.owner: Person["1234-Child"]
