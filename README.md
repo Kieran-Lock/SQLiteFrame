@@ -14,9 +14,13 @@
     <a href="https://github.com/Kieran-Lock/SQLiteFrame/blob/master/DOCUMENTATION.md"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="#getting-started">Get Started</a>
+    <a href="#about-the-project">About the Project</a>
     ·
-    <a href="#usage">Basic Usage</a>
+    <a href="#getting-started">Getting Started</a>
+    ·
+    <a href="#basic-usage">Basic Usage</a>
+    ·
+    <a href="https://github.com/Kieran-Lock/SQLiteFrame/blob/master/DOCUMENTATION.md">Documentation</a>
     ·
     <a href="https://github.com/Kieran-Lock/SQLiteFrame/blob/master/LICENSE">License</a>
   </p>
@@ -25,9 +29,9 @@
 
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## About the Project
 SQLiteFrame is an SQLite ORM for python, designed to be as lightweight, intuitive, and simple to use as possible.  
-It is designed to closely mimic SQL syntax whilst remaining as pythonic as possible to save developers valuable time _(and brain cells)_ when interacting with SQLite databases, by building reusable SQLite query objects using method-chaining, and abstracting away SQLite's **devilish** connection and cursor system with context-managers.
+It is designed to closely mimic SQL syntax whilst remaining as pythonic as possible to save developers valuable time _(and brain cells)_ when interacting with SQLite databases, by building reusable SQLite query objects using method-chaining, and abstracting away SQLite's **devilish** connection and cursor system with _(pun intended)_ a single context manager.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -61,7 +65,7 @@ To create a table, use the template below. This will automatically run the Creat
 from sqliteframe import Database, Table, String, Integer, Boolean
 
 
-database = Database("database.db", output=False)  # When the output parameter is True, the formed SQL query will be outputted into the console as a string every time a query is executed
+database = Database("<absolute_database_path>.db", output=False)  # When the output parameter is True, the formed SQL query will be outputted into the console as a string every time a query is executed
 
 
 @Table(database)
@@ -154,6 +158,7 @@ _NOTE: The where clause can be emitted from this statement, but this would delet
 
 ### Dropping Tables
 Dropping tables does not delete the table reference from python - just in the SQL. Tables which others tables depend on / reference cannot be deleted by default to maintain referential integrity. This behaviour can be changed when defining the referencing foreign key column.  
+  
 To entirely drop (delete) an existing table, use the `drop_table` statement:
 ```py
 SecondTableName.drop_table().execute()  # This table is dropped first as it depends on the FirstTableName table
