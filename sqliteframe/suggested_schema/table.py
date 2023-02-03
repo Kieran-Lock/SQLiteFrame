@@ -22,7 +22,6 @@ class Table:
             if column[1] in foreign_keys:  # 1:Name
                 yield FKColumn(*column[1:], *foreign_keys.get(column[1]))
             else:
-                print(column)
                 yield Column(*column[1:])
 
     def get_foreign_keys(self) -> dict[str, tuple[str, str, str, str]]:

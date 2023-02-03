@@ -14,5 +14,5 @@ class InsertInto(Statement):
 
     def build_sql(self) -> str:
         columns_section = ", ".join(column.name for column, _ in self.data)
-        values_section = ", ".join(str(column.type.encode(value)) for column, value in self.data)
+        values_section = ", ".join(self.parameter(column.type.encode(value)) for column, value in self.data)
         return f"INSERT INTO {self.table} ({columns_section})\nVALUES ({values_section});"

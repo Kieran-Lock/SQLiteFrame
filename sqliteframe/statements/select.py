@@ -4,7 +4,6 @@ from ..wildcards import Wildcards
 from ..order_by import OrderBy, OrderTypes
 from ..where import Where, Condition
 from ..join import Join, JoinTypes
-
 if False:
     from ..table import Column, Table
 
@@ -34,6 +33,7 @@ class Select(Statement):
 
     def where(self, where: Where | Condition) -> Select:
         if self.where_statement is None:
+            where.register(self)
             self.where_statement = where
         else:
             self.where_statement &= where

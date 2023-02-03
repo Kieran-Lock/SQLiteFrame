@@ -19,6 +19,7 @@ class Set(Statement):
         return self
 
     def build_sql(self) -> str:
-        set_section = ", ".join(f"{column.name} = {column.type.encode(value)}" for column, value in self.data)
+        set_section = ", ".join(f"{column.name} = {self.parameter(column.type.encode(value))}"
+                                for column, value in self.data)
         where_section = "" if self.where_statement is None else f"\nWHERE {self.where_statement}"
         return f"UPDATE {self.table}\nSET {set_section}{where_section};"

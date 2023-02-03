@@ -75,11 +75,15 @@ class Database:
                 self.commit()
             self.disconnect()
 
-    def execute(self, statement: Statement | str) -> Cursor:
+    def execute(self, statement: Statement | str, query_parameters: Optional[list[object]] = None) -> Cursor:
+        to_execute = str(statement)
+        if query_parameters is None:
+            query_parameters = statement.query_parameters if isinstance(statement, Statement) else []
         if not self.connected:
             statement = statement if isinstance(statement, str) else f"'{statement.__class__.__name__}' statement"
             raise RuntimeError(
                 f"Could not execute {statement} without connection") from None
         if self.output:
             print(statement)
-        return self.cursor.execute(str(statement))
+        print("EXECUTING with:", query_parameters)
+        return self.cursor.execute(to_execute, query_parameters)
