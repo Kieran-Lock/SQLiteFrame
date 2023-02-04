@@ -8,18 +8,13 @@ if False:
 
 class Where(Parameterized):
     def __init__(self, *syntax: Condition | Conjunctions):
-        super().__init__()
         self.syntax = ["(", *syntax, ")"]
-        self._parameters = []
 
     @property
     def parameters(self) -> list[object]:
+        from .condition import Condition  # TODO: Clean Up Improper Import
         return [condition for parameters in map(lambda condition: condition.parameters, filter(
             lambda syntax: isinstance(syntax, Condition), self.syntax)) for condition in parameters]
-
-    @parameters.setter
-    def parameters(self, query_parameters: list[object]) -> None:
-        self._parameters = query_parameters
 
     def build_sql(self) -> str:
         syntax = map(lambda part: part.value if isinstance(part, Conjunctions) else str(part), self.syntax)

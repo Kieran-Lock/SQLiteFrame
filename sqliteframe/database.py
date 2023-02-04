@@ -16,14 +16,18 @@ class Database:
     tables: set[Table] = field(init=False, default_factory=set)
     db_connection: Optional[Connection] = field(init=False, default=None)
     cursor: Optional[Cursor] = field(init=False, default=None)
-    connections: bool = field(init=False, default=0)
+    connections: list[bool] = field(init=False, default_factory=list)
 
     def add_table(self, table: Table):
         self.tables.add(table)
 
     @property
+    def commit_mode(self) -> bool:
+        return self.connections[-1]
+
+    @property
     def connected(self) -> bool:
-        return self.connections > 0
+        return bool(self.connections)
 
     @property
     def foreign_keys_enabled(self) -> bool:
@@ -41,12 +45,12 @@ class Database:
             raise RuntimeError(f"Could not disabled FKs without a pre-established connection") from None
         return Result([], self.execute(Pragma(self, PragmaStatements.FOREIGN_KEYS, pragma_value="OFF")))
 
-    def connect(self) -> Connection:
+    def connect(self, commit: bool = True) -> Connection:
         if self.connected:
-            self.connections += 1
+            self.connections.append(commit)
             return self.db_connection
         self.db_connection = connect(self.path)
-        self.connections += 1
+        self.connections.append(commit)
         self.cursor = self.db_connection.cursor()
         if self.foreign_keys:
             self.enable_foreign_keys()
@@ -55,7 +59,7 @@ class Database:
     def disconnect(self) -> None:
         if not self.connected:
             raise RuntimeError(f"Could not disconnect without a pre-established connection") from None#
-        self.connections -= 1
+        self.connections.pop()
         if not self.connected:
             self.db_connection.close()
             self.db_connection = None
@@ -67,11 +71,11 @@ class Database:
 
     @contextmanager
     def connection(self, commit: bool = True) -> Generator[Connection, None, None]:
-        self.connect()
+        self.connect(commit=commit)
         try:
             yield self.db_connection
         finally:
-            if commit:
+            if self.commit_mode:
                 self.commit()
             self.disconnect()
 
@@ -85,5 +89,4 @@ class Database:
                 f"Could not execute {statement} without connection") from None
         if self.output:
             print(statement)
-        print("EXECUTING with:", query_parameters)
         return self.cursor.execute(to_execute, query_parameters)

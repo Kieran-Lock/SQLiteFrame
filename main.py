@@ -46,7 +46,7 @@ insert_car_3 = Car.insert_into({
     Car.number_plate: "KL56 MNO",
     Car.name: "GTR R35",
     Car.brand: "Nissan",
-    Car.price: 60_000,
+    Car.price: 60_000.00,
     Car.seats: 4,
     Car.date_purchased: date(2010, 7, 9),
     Car.supercar: True,

@@ -7,6 +7,7 @@ if False:
 
 class Join:
     def __init__(self, table: Table, where: Where | Condition, join_type: JoinTypes):
+        super().__init__()
         self.table = table
         self.where = where
         self.join_type = join_type

@@ -15,7 +15,11 @@ class Set(Statement):
         self.where_statement = None
 
     def where(self, where: Where) -> Set:
-        self.where_statement = where
+        if self.where_statement is None:
+            where.register(self)
+            self.where_statement = where
+        else:
+            self.where_statement &= where
         return self
 
     def build_sql(self) -> str:

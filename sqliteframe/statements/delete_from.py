@@ -17,6 +17,7 @@ class DeleteFrom(Statement):
 
     def where(self, where: Where | Condition) -> DeleteFrom:
         if self.where_statement is None:
+            where.register(self)
             self.where_statement = where
         else:
             self.where_statement &= where

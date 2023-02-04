@@ -10,10 +10,18 @@ if False:
 
 class Condition(Parameterized):
     def __init__(self, left: Column, comparator: Comparisons, right: Column | object):
-        super().__init__()
         self.left = left
         self.comparator = comparator
         self.right = right
+        self._parameters = []
+
+    @property
+    def parameters(self) -> list[object]:
+        return self._parameters
+
+    @parameters.setter
+    def parameters(self, parameters: list[object]) -> None:
+        self._parameters = parameters
 
     def __bool__(self) -> bool:  # Needed for __contains__ checks
         return False

@@ -7,12 +7,14 @@ if False:
 
 
 class Parameterized(ABC):
-    def __init__(self):
-        self.parameters = []
-
     def parameter(self, parameter: object) -> Literal["?"]:
         self.parameters.append(parameter)
         return "?"
+
+    @property
+    @abstractmethod
+    def parameters(self) -> list[object]:
+        return []
 
     @abstractmethod
     def build_sql(self) -> str:
