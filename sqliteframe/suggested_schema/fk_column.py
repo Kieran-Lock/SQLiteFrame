@@ -15,7 +15,7 @@ class FKColumn(Column):
 
     def get_type_details(self) -> str:
         nullable = "nullable=True" if self.is_nullable else ""
-        default = "" if self.default is None else f"default={self.default}"  # Likely not formatted at the moment
+        default = "" if self.default is None else f"default={self.type.default_suggestion(self.default)}"
         on_update = "" if self.on_update == Restraints.CASCADE.value else \
             f"on_update=FKRestraints.{self.__class__.FK_RESTRAINTS.get(self.on_update)}"
         on_delete = "" if self.on_delete == Restraints.RESTRICT.value else \

@@ -24,6 +24,6 @@ class Column:
         if self.default is None and not (self.is_nullable or self.is_primary_key):
             return ""
         nullable = "nullable=True" if self.is_nullable else ""
-        default = "" if self.default is None else f"default={self.default}"
+        default = "" if self.default is None else f"default={self.type.default_suggestion(self.default)}"
         primary_key = "primary_key=True" if self.is_primary_key else ""
         return f"({', '.join(filter(bool, (nullable, default, primary_key)))})"

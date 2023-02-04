@@ -12,4 +12,4 @@ class String(Type[str, str]):
         return f"\"{decoded}\""
 
     def default_suggestion(self, encoded: str) -> str:
-        return f"\"{encoded}\""
+        return f"{encoded}"

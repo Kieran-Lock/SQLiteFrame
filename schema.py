@@ -1,4 +1,5 @@
 from sqliteframe import Database, Table, String, Boolean, Date, Time, ForeignKey, Blob, Float, Integer
+from datetime import date, time
 
 
 database = Database("database.db", output=True)
@@ -16,11 +17,11 @@ class Person:
 class Car:
     number_plate = String(primary_key=True)
     name = String
-    brand = String
+    brand = String(default="Unknown")
     price = Float
     seats = Integer(default=5)
-    date_purchased = Date(nullable=True)
-    time_purchased = Time(nullable=True)
+    date_purchased = Date(nullable=True, default=date(2000, 1, 1))
+    time_purchased = Time(nullable=True, default=time(0, 0, 0))
     supercar = Boolean(default=False)
     owner = ForeignKey(Person)
     reg_document = Blob(default=b"No documents.")

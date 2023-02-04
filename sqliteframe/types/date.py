@@ -13,4 +13,6 @@ class Date(Type[int, date]):
         return decoded.toordinal()
 
     def default_suggestion(self, encoded: int) -> str:
-        return f"date({date.fromordinal(encoded).isoformat().replace('-', ', ')})"
+        iso_formatted = date.fromordinal(int(encoded)).isoformat()
+        joined = ", ".join(number.lstrip("0") for number in iso_formatted.split("-"))
+        return f"date({joined})"

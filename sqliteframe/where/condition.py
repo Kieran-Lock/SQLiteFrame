@@ -19,10 +19,6 @@ class Condition(Parameterized):
     def parameters(self) -> list[object]:
         return self._parameters
 
-    @parameters.setter
-    def parameters(self, parameters: list[object]) -> None:
-        self._parameters = parameters
-
     def __bool__(self) -> bool:  # Needed for __contains__ checks
         return False
 
