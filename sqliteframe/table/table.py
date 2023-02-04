@@ -11,18 +11,23 @@ if False:
     from ..database import Database
 
 
-TableT = TypeVar("TableT", bound=type)
+TableT = TypeVar("TableT")
 ColumnT = TypeVar("ColumnT", bound=Column)
 
 
+def table_decorator(database: Database, auto_create: bool = True) -> Callable[[TableT], Table | Type[TableT]]:
+    def wrapper(table: Type[TableT]) -> Table | Type[TableT]:
+        return Table(table, database, auto_create=auto_create)
+
+    return wrapper
+
+
 class Table:
-    def __init__(self, database: Database, auto_create: bool = True):
+    def __init__(self, table: Type[TableT], database: Database, auto_create: bool = True):
         self.database = database
         self.auto_create = auto_create
         self.table_name = None
         self.columns = []
-
-    def __call__(self, table: TableT) -> Table | TableT:
         self.database.add_table(self)
         self.table_name = table.__name__
         for column in self.extract_columns(table):
@@ -36,7 +41,6 @@ class Table:
                     self.create_table().execute()
                 except NameError:
                     raise ValueError("Cannot lazy-load foreign key with auto_create=True") from None
-        return self
 
     def __repr__(self) -> str:
         return pformat(self.columns)
@@ -44,7 +48,7 @@ class Table:
     def __str__(self) -> str:
         return self.table_name
 
-    def extract_columns(self, table: TableT):
+    def extract_columns(self, table: Type[TableT]):
         column_information = list(filter(lambda member: not member[0].startswith("__"),
                                          getmembers(table, lambda member: not isroutine(member))))
         for name, column in column_information:

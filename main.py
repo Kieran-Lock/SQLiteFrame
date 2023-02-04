@@ -1,4 +1,4 @@
-"""from schema import Person, Car, database
+from schema import Person, Car, database
 from pprint import pprint
 from datetime import date
 from sqliteframe import JoinTypes, OrderTypes
@@ -86,13 +86,5 @@ with database.connection():
     set_person.execute()
     for record in select_car.execute():
         pprint(record)
-"""
-
-
-from sqliteframe import SuggestedSchema
-from schema import database
-
-
-schema = SuggestedSchema(database)
-with open("suggested_schema.py", "w+") as f:
-    f.write(str(schema))
+    Car.drop_table().execute()
+    Person.drop_table().execute()

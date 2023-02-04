@@ -1,5 +1,5 @@
 from .database import Database
-from .table import Table
+from .table import table_decorator as Table
 from .types import Integer, String, Type, Boolean, Date, Time, Blob, Float, Types
 from .wildcards import Wildcards
 from .foreign_key import ForeignKey, Restraints as FKRestraints
