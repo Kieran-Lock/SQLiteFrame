@@ -13,7 +13,7 @@ class Table:
 
     def __str__(self) -> str:
         columns = "\n\t".join(map(str, self.columns))
-        return f"@Table(database)\nclass {self.name}:\n\t{columns}"
+        return f"@table(database)\nclass {self.name}:\n\t{columns}"
 
     def get_columns(self) -> Generator[Column, None, None]:
         foreign_keys = self.get_foreign_keys()

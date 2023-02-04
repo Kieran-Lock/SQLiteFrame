@@ -16,5 +16,5 @@ class Schema:
         return self.database.execute("SELECT tbl_name FROM sqlite_master WHERE type=\"table\";")
 
     def __str__(self) -> str:
-        return "from sqliteframe import Database, Table\n\n\n" + "database = Database(\"<database_name>.db\")\n\n\n" + \
+        return "from sqliteframe import Database, table\n\n\n" + "database = Database(\"<database_name>.db\")\n\n\n" + \
             "\n\n\n".join(map(str, self.tables)) + "\n"

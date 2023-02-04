@@ -1,11 +1,11 @@
-from sqliteframe import Database, Table, String, Boolean, Date, Time, ForeignKey, Blob, Float, Integer
+from sqliteframe import Database, table, String, Boolean, Date, Time, ForeignKey, Blob, Float, Integer
 from datetime import date, time
 
 
 database = Database("database.db", output=True)
 
 
-@Table(database)
+@table(database)
 class Person:
     national_insurance_number = String(primary_key=True)
     first_name = String
@@ -13,7 +13,7 @@ class Person:
     date_of_birth = Date
 
 
-@Table(database)
+@table(database)
 class Car:
     number_plate = String(primary_key=True)
     name = String
