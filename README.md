@@ -31,7 +31,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About the Project
 SQLiteFrame is an SQLite ORM for python, designed to be as lightweight, intuitive, and simple to use as possible.  
-It is designed to closely mimic SQL syntax whilst remaining as pythonic as possible to save developers valuable time _(and brain cells)_ when interacting with SQLite databases, by building reusable SQLite query objects using method-chaining, and abstracting away SQLite's **devilish** connection and cursor system with _(pun intended)_ a single context manager.
+It is designed to closely mimic SQL syntax whilst remaining as pythonic as possible to save developers valuable time _(and brain cells)_ when interacting with SQLite databases, by building reusable SQLite query objects using method-chaining, and abstracting away SQLite's connection and cursor system with a single context manager.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
