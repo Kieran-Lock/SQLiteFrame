@@ -20,5 +20,5 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project.urls]
-GitHub = https://github.com/Kieran-Lock/SQLiteFrame
-Documentation = https://github.com/Kieran-Lock/SQLiteFrame/blob/master/DOCUMENTATION.md
+GitHub = "https://github.com/Kieran-Lock/SQLiteFrame"
+Documentation = "https://github.com/Kieran-Lock/SQLiteFrame/blob/master/DOCUMENTATION.md"
