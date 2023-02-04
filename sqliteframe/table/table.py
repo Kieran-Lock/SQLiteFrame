@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import TypeVar, Literal, Iterable, Optional
+from typing import TypeVar, Literal, Iterable, Optional, Callable
 from pprint import pformat
 from inspect import getmembers, isroutine
 from .column import Column
@@ -15,10 +15,9 @@ TableT = TypeVar("TableT")
 ColumnT = TypeVar("ColumnT", bound=Column)
 
 
-def table_decorator(database: Database, auto_create: bool = True) -> Callable[[TableT], Table | Type[TableT]]:
-    def wrapper(table: Type[TableT]) -> Table | Type[TableT]:
+def table_decorator(database: Database, auto_create: bool = True) -> Callable[[type[TableT]], Table | TableT]:
+    def wrapper(table: type[TableT]) -> Table | type[TableT]:
         return Table(table, database, auto_create=auto_create)
-
     return wrapper
 
 
@@ -28,6 +27,9 @@ class Table:
         self.auto_create = auto_create
         self.table_name = None
         self.columns = []
+        self.integrate_with_structure(table)
+
+    def integrate_with_structure(self, table: Type[TableT]) -> None:
         self.database.add_table(self)
         self.table_name = table.__name__
         for column in self.extract_columns(table):
