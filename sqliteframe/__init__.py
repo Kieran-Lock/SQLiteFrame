@@ -10,3 +10,6 @@ from .statements import Pragma
 from .pragma import PragmaTypes, PragmaStatements
 from .suggested_schema import SuggestedSchema
 from .parameterized import Parameterized
+
+
+__all__ = [table]
