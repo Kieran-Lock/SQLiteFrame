@@ -2,7 +2,7 @@
 name = "SQLiteFrame"
 description = "A lightweight, zero-dependency ORM for SQLite in Python"
 readme = "README.md"
-version = "0.1.2"
+version = "0.2.1"
 authors = [
     { name = "Kieran Lock", email = "kieran.lock@outlook.com" }
 ]
