@@ -13,8 +13,8 @@ class Schema:
         return [Table(self.database, table[0]) for table in [*self.get_table_names()]]
 
     def get_table_names(self) -> Cursor:
-        return self.database.execute("SELECT tbl_name FROM sqlite_master WHERE type=\"table\";")
+        return self.database.execute("SELECT tbl_name FROM sqlite_master WHERE type=\"entity\";")
 
     def __str__(self) -> str:
-        return "from sqliteframe import Database, table\n\n\n" + "database = Database(\"<database_name>.db\")\n\n\n" + \
+        return "from sqliteframe import Database, entity\n\n\n" + "database = Database(\"<database_name>.db\")\n\n\n" + \
             "\n\n\n".join(map(str, self.tables)) + "\n"

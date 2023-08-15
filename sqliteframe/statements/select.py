@@ -5,11 +5,11 @@ from ..order_by import OrderBy, OrderTypes
 from ..where import Where, Condition
 from ..join import Join, JoinTypes
 if False:
-    from ..table import Column, Table
+    from ..entity import Column, Entity
 
 
 class Select(Statement):
-    def __init__(self, table: Table, columns: list[Column | Wildcards], distinct: bool = False):
+    def __init__(self, table: Entity, columns: list[Column | Wildcards], distinct: bool = False):
         super().__init__(table.database, yield_column_factory=lambda: self.columns)
         self.table = table
         if not filter(lambda column: column not in [wildcard.value for wildcard in Wildcards],
@@ -39,7 +39,7 @@ class Select(Statement):
             self.where_statement &= where
         return self
 
-    def join(self, table: Table, where: Where | Condition, join_type: JoinTypes = JoinTypes.INNER) -> Select:
+    def join(self, table: Entity, where: Where | Condition, join_type: JoinTypes = JoinTypes.INNER) -> Select:
         if Wildcards.All in self.passed_columns:
             self.columns = self.columns + table.columns if join_type == JoinTypes.LEFT else table.columns + self.columns
         else:

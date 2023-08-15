@@ -2,11 +2,11 @@ from __future__ import annotations
 from .join_types import JoinTypes
 from ..where import Condition, Where
 if False:
-    from sqliteframe.table import Table
+    from sqliteframe.entity import Entity
 
 
 class Join:
-    def __init__(self, table: Table, where: Where | Condition, join_type: JoinTypes):
+    def __init__(self, table: Entity, where: Where | Condition, join_type: JoinTypes):
         super().__init__()
         self.table = table
         self.where = where

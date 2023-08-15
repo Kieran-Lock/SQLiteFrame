@@ -4,12 +4,12 @@ from ..types import Type
 from ..where import Comparisons, Condition
 from ..foreign_key import ForeignKey
 if False:
-    from .table import Table
+    from .entity import Entity
 
 
 @dataclass(frozen=True, slots=True)
 class Column:
-    table: Table = field(repr=False)
+    table: Entity = field(repr=False)
     name: str
     type: Type | ForeignKey
 

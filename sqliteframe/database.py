@@ -2,7 +2,7 @@ from typing import Optional, Generator
 from dataclasses import dataclass, field
 from contextlib import contextmanager
 from sqlite3 import connect, Cursor, Connection
-from .table import Table
+from .entity import Entity
 from .statements import Statement, Pragma
 from .pragma import PragmaStatements
 from .result import Result
@@ -13,12 +13,12 @@ class Database:
     path: str
     output: bool = False
     foreign_keys: bool = True
-    tables: set[Table] = field(init=False, default_factory=set)
+    tables: set[Entity] = field(init=False, default_factory=set)
     db_connection: Optional[Connection] = field(init=False, default=None)
     cursor: Optional[Cursor] = field(init=False, default=None)
     connections: list[bool] = field(init=False, default_factory=list)
 
-    def add_table(self, table: Table):
+    def add_table(self, table: Entity):
         self.tables.add(table)
 
     @property

@@ -2,11 +2,11 @@ from __future__ import annotations
 from .statement import Statement
 from ..where import Where, Condition
 if False:
-    from ..table import Table
+    from ..entity import Entity
 
 
 class DeleteFrom(Statement):
-    def __init__(self, table: Table):
+    def __init__(self, table: Entity):
         super().__init__(table.database)
         self.table = table
         self.where_statement = None

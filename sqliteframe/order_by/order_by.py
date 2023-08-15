@@ -1,7 +1,7 @@
 from __future__ import annotations
 from .order_types import OrderTypes
 if False:
-    from sqliteframe.table import Column
+    from sqliteframe.entity import Column
 
 
 class OrderBy:

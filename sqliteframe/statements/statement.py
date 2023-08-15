@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 from ..result import Result
 from ..parameterized import Parameterized
 if False:
-    from ..table import Column
+    from ..entity import Column
     from ..database import Database
 
 

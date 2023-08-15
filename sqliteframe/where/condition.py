@@ -4,7 +4,7 @@ from .conjunctions import Conjunctions
 from ..parameterized import Parameterized
 
 if False:
-    from ..table import Column
+    from ..entity import Column
     from .where import Where
 
 
@@ -29,13 +29,13 @@ class Condition(Parameterized):
         return self.combine(other, Conjunctions.AND)
 
     def combine(self, other: object, conjunction: Conjunctions) -> Where:
-        from .where import Where  # TODO: Clean Up Improper Import
+        from .where import Where
         if not (isinstance(other, Condition) or isinstance(other, Where)):
             raise TypeError(f"Cannot join Condition with type '{type(other)}'") from None
         return Where(self, conjunction.value, other)
 
     def build_sql(self) -> str:
-        from ..table import Column  # TODO: Clean Up Improper Import
+        from ..entity import Column
         right = f"{self.right.table}.{self.right.name}" if isinstance(self.right, Column) else \
             self.parameter(self.left.type.encode(self.right))
         return f"{self.left.table}.{self.left.name} {self.comparator.value} {right}"

@@ -1,11 +1,11 @@
 from __future__ import annotations
 from .statement import Statement
 if False:
-    from ..table import Column, Table
+    from ..entity import Column, Entity
 
 
 class CreateTable(Statement):
-    def __init__(self, table: Table, columns: list[Column]):
+    def __init__(self, table: Entity, columns: list[Column]):
         super().__init__(table.database)
         self.table = table
         self.columns = columns

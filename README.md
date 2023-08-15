@@ -114,7 +114,7 @@ class SecondTableName:
     primary_key_field = Integer(primary_key=True)
     second_column = Boolean(nullable=True)
     third_column = String
-    foreign_key_column = ForeignKey(FirstTableName)  # This column now references the primary key of the FirstTableName table, and will infer its type
+    foreign_key_column = ForeignKey(FirstTableName)  # This column now references the primary key of the FirstTableName entity, and will infer its type
 ```
 
 ### Complex Data Fetching / Selection
@@ -161,8 +161,8 @@ Dropping tables does not delete the table reference from python - just in the SQ
   
 To entirely drop (delete) an existing table, use the `drop_table` statement:
 ```py
-SecondTableName.drop_table().execute()  # This table is dropped first as it depends on the FirstTableName table
-FirstTableName.drop_table().execute()  # Cannot drop this table until the SecondTableName table is dropped
+SecondTableName.drop_table().execute()  # This entity is dropped first as it depends on the FirstTableName entity
+FirstTableName.drop_table().execute()  # Cannot drop this entity until the SecondTableName entity is dropped
 ```
 
 _For more examples and specific detail, please refer to the [Documentation](https://github.com/Kieran-Lock/SQLiteFrame/blob/master/DOCUMENTATION.md)_

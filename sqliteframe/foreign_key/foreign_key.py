@@ -4,7 +4,7 @@ from typing import TypeVar, Optional, Callable
 from .restraints import Restraints
 from ..types import Type
 if False:
-    from ..table import Table, Column
+    from ..entity import Entity, Column
 
 
 EncodedT = TypeVar("EncodedT")
@@ -12,7 +12,7 @@ DecodedT = TypeVar("DecodedT")
 
 
 class ForeignKey(Type[EncodedT, DecodedT]):
-    def __init__(self, table: Table | Callable[[], Table], default: Optional[DecodedT] = None,
+    def __init__(self, table: Entity | Callable[[], Entity], default: Optional[DecodedT] = None,
                  on_update: Restraints = Restraints.CASCADE, on_delete: Restraints = Restraints.RESTRICT,
                  nullable: bool = False):
         self._table = table
@@ -21,9 +21,9 @@ class ForeignKey(Type[EncodedT, DecodedT]):
         super().__init__(nullable=nullable, default=default)
 
     @cached_property
-    def table(self) -> Table:
-        from ..table import Table  # TODO: Possibility of checking if __name__ is lambda instead?
-        if not isinstance(self._table, Table):
+    def table(self) -> Entity:
+        from ..entity import Entity  # TODO: Possibility of checking if __name__ is lambda instead?
+        if not isinstance(self._table, Entity):
             return self._table()
         return self._table
 

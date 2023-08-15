@@ -15,13 +15,13 @@ TableT = TypeVar("TableT")
 ColumnT = TypeVar("ColumnT", bound=Column)
 
 
-def table_decorator(database: Database, auto_create: bool = True) -> Callable[[type[TableT]], Table | TableT]:
-    def wrapper(table: type[TableT]) -> Table | type[TableT]:
-        return Table(table, database, auto_create=auto_create)
+def table(database: Database, auto_create: bool = True) -> Callable[[type[TableT]], Entity | TableT]:
+    def wrapper(table_: type[TableT]) -> Entity | type[TableT]:
+        return Entity(table_, database, auto_create=auto_create)
     return wrapper
 
 
-class Table:
+class Entity:
     def __init__(self, table: Type[TableT], database: Database, auto_create: bool = True):
         self.database = database
         self.auto_create = auto_create

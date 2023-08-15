@@ -1,5 +1,5 @@
 from .database import Database
-from .table import table_decorator as table
+from .entity import table
 from .types import Integer, String, Type, Boolean, Date, Time, Blob, Float, Types
 from .wildcards import Wildcards
 from .foreign_key import ForeignKey, Restraints as FKRestraints
@@ -10,6 +10,3 @@ from .statements import Pragma
 from .pragma import PragmaTypes, PragmaStatements
 from .suggested_schema import SuggestedSchema
 from .parameterized import Parameterized
-
-
-__all__ = [table]

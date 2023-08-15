@@ -3,12 +3,12 @@ from .statement import Statement
 from ..where import Where
 if False:
     from typing import TypeVar
-    from ..table import Column, Table
+    from ..entity import Column, Entity
     ColumnT = TypeVar("ColumnT", bound=Column)
 
 
 class Set(Statement):
-    def __init__(self, table: Table, data: dict[ColumnT, ColumnT.type.decoded_type]):
+    def __init__(self, table: Entity, data: dict[ColumnT, ColumnT.type.decoded_type]):
         super().__init__(table.database)
         self.table = table
         self.data = data.items()
