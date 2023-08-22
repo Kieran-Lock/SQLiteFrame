@@ -1,10 +1,29 @@
+"""
+The module containing logic for foreign key columns when suggesting schemas.
+"""
+
 from ..foreign_key import Restraints
 from .column import Column
 
 
 class FKColumn(Column):
+    """
+    The class representing foreign key columns when suggesting schemas from pre-existing databases.
+    """
+
     def __init__(self, name: str, sql_type: str, not_null: bool, default: object, _: bool,
                  ref_table: str, on_update: str, on_delete: str):
+        """
+        :param name: The name of the column
+        :param sql_type: The type of the column as a valid SQL string
+        :param not_null: Whether the column is not null
+        :param default: What the default for the column is
+        :param _: Whether the column is a primary key column - this is unused and should always be false
+        :param ref_table: The table this column links to
+        :param on_update: The declared mode for cascading when this column is updated
+        :param on_delete: The declared mode for cascading when this column is deleted
+        """
+
         self.ref_table = ref_table
         self.on_update = on_update
         self.on_delete = on_delete
