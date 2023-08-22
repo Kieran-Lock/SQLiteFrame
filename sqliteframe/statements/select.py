@@ -3,12 +3,13 @@ The module containing logic for SELECT statements.
 """
 
 from __future__ import annotations
+from typing import TYPE_CHECKING
 from .statement import Statement
 from ..wildcards import Wildcards
 from ..order_by import OrderBy, OrderTypes
 from ..where import Where, Condition
 from ..join import Join, JoinTypes
-if False:
+if TYPE_CHECKING:
     from ..entity import Column, Entity
 
 

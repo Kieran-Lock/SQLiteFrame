@@ -3,9 +3,10 @@ The module containing logic for DELETE FROM statements.
 """
 
 from __future__ import annotations
+from typing import TYPE_CHECKING
 from .statement import Statement
 from ..where import Where, Condition
-if False:
+if TYPE_CHECKING:
     from ..entity import Entity
 
 

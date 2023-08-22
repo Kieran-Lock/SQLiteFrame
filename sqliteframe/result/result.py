@@ -3,10 +3,9 @@ A module containing the logic for SQLiteFrame Result objects.
 """
 
 from __future__ import annotations
-from typing import Iterator
+from typing import Iterator, TypeVar, TYPE_CHECKING
 from sqlite3 import Cursor
-if False:
-    from typing import TypeVar
+if TYPE_CHECKING:
     from sqliteframe.entity import Column
     ColumnT = TypeVar("ColumnT", bound=Column)
 

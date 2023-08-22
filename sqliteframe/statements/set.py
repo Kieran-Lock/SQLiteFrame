@@ -3,10 +3,10 @@ The module containing logic for SET statements.
 """
 
 from __future__ import annotations
+from typing import TypeVar, TYPE_CHECKING
 from .statement import Statement
 from ..where import Where
-if False:
-    from typing import TypeVar
+if TYPE_CHECKING:
     from ..entity import Column, Entity
     ColumnT = TypeVar("ColumnT", bound=Column)
 

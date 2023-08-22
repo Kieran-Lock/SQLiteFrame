@@ -3,10 +3,10 @@ The module containing logic for PRAGMA statements.
 """
 
 from __future__ import annotations
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 from .statement import Statement
 from ..pragma import PragmaStatements, PragmaTypes
-if False:
+if TYPE_CHECKING:
     from ..database import Database
 
 

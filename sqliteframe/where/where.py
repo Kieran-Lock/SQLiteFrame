@@ -3,10 +3,10 @@ The module containing the logic involved in building WHERE clauses in complex qu
 """
 
 from __future__ import annotations
+from typing import TYPE_CHECKING
 from .conjunctions import Conjunctions
 from ..parameterized import Parameterized
-
-if False:
+if TYPE_CHECKING:
     from .condition import Condition
 
 

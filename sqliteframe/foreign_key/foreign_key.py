@@ -4,10 +4,10 @@ The module containing logic for foreign keys.
 
 from __future__ import annotations
 from functools import cached_property
-from typing import TypeVar, Optional, Callable
+from typing import TypeVar, Optional, Callable, TYPE_CHECKING
 from .restraints import Restraints
 from ..types import Type
-if False:
+if TYPE_CHECKING:
     from ..entity import Entity, Column
 
 

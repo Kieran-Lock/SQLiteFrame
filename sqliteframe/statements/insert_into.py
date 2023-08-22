@@ -3,9 +3,9 @@ The module containing logic for INSERT INTO statements.
 """
 
 from __future__ import annotations
+from typing import TypeVar, TYPE_CHECKING
 from .statement import Statement
-if False:
-    from typing import TypeVar
+if TYPE_CHECKING:
     from ..entity import Column, Entity
     ColumnT = TypeVar("ColumnT", bound=Column)
 

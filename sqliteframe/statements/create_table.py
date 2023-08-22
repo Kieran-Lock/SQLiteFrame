@@ -3,8 +3,9 @@ The module containing logic for CREATE TABLE statements.
 """
 
 from __future__ import annotations
+from typing import TYPE_CHECKING
 from .statement import Statement
-if False:
+if TYPE_CHECKING:
     from ..entity import Column, Entity
 
 

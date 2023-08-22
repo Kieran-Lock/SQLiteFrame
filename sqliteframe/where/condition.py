@@ -3,11 +3,11 @@ The module containing the logic for creating individual conditions in a WHERE cl
 """
 
 from __future__ import annotations
+from typing import TYPE_CHECKING
 from .comparisons import Comparisons
 from .conjunctions import Conjunctions
 from ..parameterized import Parameterized
-
-if False:
+if TYPE_CHECKING:
     from ..entity import Column
     from .where import Where
 

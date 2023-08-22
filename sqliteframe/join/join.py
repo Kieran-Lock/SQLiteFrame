@@ -3,9 +3,10 @@ The module containing the logic for JOIN clauses.
 """
 
 from __future__ import annotations
+from typing import TYPE_CHECKING
 from .join_types import JoinTypes
 from ..where import Condition, Where
-if False:
+if TYPE_CHECKING:
     from sqliteframe.entity import Entity
 
 

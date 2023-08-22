@@ -3,11 +3,11 @@ The module containing logic for statements in SQLiteFrame.
 """
 
 from __future__ import annotations
-from typing import Callable, Literal
+from typing import Callable, Literal, TYPE_CHECKING
 from abc import ABC, abstractmethod
 from ..result import Result
 from ..parameterized import Parameterized
-if False:
+if TYPE_CHECKING:
     from ..entity import Column
     from ..database import Database
 

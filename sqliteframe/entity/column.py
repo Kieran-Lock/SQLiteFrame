@@ -3,11 +3,12 @@ The module containing the logic for SQLiteFrame columns.
 """
 
 from __future__ import annotations
+from typing import TYPE_CHECKING
 from dataclasses import dataclass, field
 from ..types import Type
 from ..where import Comparisons, Condition
 from ..foreign_key import ForeignKey
-if False:
+if TYPE_CHECKING:
     from .entity import Entity
 
 

@@ -3,7 +3,7 @@ The module containing the logic for entities (tables) in SQLiteFrame
 """
 
 from __future__ import annotations
-from typing import TypeVar, Literal, Iterable, Optional, Callable, Iterator
+from typing import TypeVar, Literal, Iterable, Optional, Callable, Iterator, TYPE_CHECKING
 from pprint import pformat
 from inspect import getmembers, isroutine
 from .column import Column
@@ -11,7 +11,7 @@ from ..types import Type
 from ..statements import InsertInto, Set, CreateTable, Select, DeleteFrom, DropTable
 from ..wildcards import Wildcards
 from ..foreign_key import ForeignKey
-if False:
+if TYPE_CHECKING:
     from ..database import Database
 
 

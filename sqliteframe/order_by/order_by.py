@@ -3,8 +3,9 @@ The module containing the logic for ORDER BY clauses.
 """
 
 from __future__ import annotations
+from typing import TYPE_CHECKING
 from .order_types import OrderTypes
-if False:
+if TYPE_CHECKING:
     from sqliteframe.entity import Column
 
 
