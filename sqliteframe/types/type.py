@@ -68,7 +68,7 @@ class Type(Generic[EncodedT, DecodedT], ABC):
         return
 
     @property
-    def encoded_type(self):
+    def encoded_type(self) -> object:
         """
         Gets the encoded type of this class via some implementation details of Python's generics.
         """
@@ -76,7 +76,7 @@ class Type(Generic[EncodedT, DecodedT], ABC):
         return get_args(self.__class__.__orig_bases__[0])[0]
 
     @property
-    def decoded_type(self):
+    def decoded_type(self) -> object:
         """
         Gets the decoded type of this class via some implementation details of Python's generics.
         """
