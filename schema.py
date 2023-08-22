@@ -1,8 +1,9 @@
 from sqliteframe import Database, table, String, Boolean, Date, Time, ForeignKey, Blob, Float, Integer
 from datetime import date, time
+from pathlib import Path
 
 
-database = Database("database.db", output=True)
+database = Database(Path("./database.db"), output=True)
 
 
 @table(database)

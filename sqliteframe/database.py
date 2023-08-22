@@ -6,6 +6,7 @@ from typing import Optional, Generator
 from dataclasses import dataclass, field
 from contextlib import contextmanager
 from sqlite3 import connect, Cursor, Connection
+from pathlib import Path
 from .entity import Entity
 from .statements import Statement, Pragma
 from .pragma import PragmaStatements
@@ -25,7 +26,7 @@ class Database:
     :param foreign_keys: Whether to enable foreign key relations in this database initially
     """
 
-    path: str
+    path: Path
     output: bool = False
     foreign_keys: bool = True
     tables: set[Entity] = field(init=False, default_factory=set)
@@ -113,7 +114,7 @@ class Database:
         if self.connected:
             self.connections.append(commit)
             return self.db_connection
-        self.db_connection = connect(self.path)
+        self.db_connection = connect(str(self.path.resolve()))
         self.connections.append(commit)
         self.cursor = self.db_connection.cursor()
         if self.foreign_keys:

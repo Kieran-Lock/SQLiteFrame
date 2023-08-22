@@ -63,9 +63,10 @@ SQLiteFrame has **ZERO** external dependencies - it uses only the standard libra
 To create a table, use the template below. This will automatically run the CreateTable SQLite command for you:
 ```py
 from sqliteframe import Database, table, String, Integer, Boolean
+from pathlib import Path
 
 
-database = Database("<absolute_database_path>.db", output=False)  # When the output parameter is True, the formed SQL query will be outputted into the console as a string every time a query is executed
+database = Database(Path("<database_path>.db"), output=False)  # When the output parameter is True, the formed SQL query will be outputted into the console as a string every time a query is executed
 
 
 @table(database)
@@ -97,9 +98,10 @@ select_statement.execute()
 Linking tables can be done with Foreign Keys in SQLiteFrame:
 ```py
 from sqliteframe import Database, table, String, Integer, Boolean, ForeignKey
+from pathlib import Path
 
 
-database = Database("database.db", output=False)
+database = Database(Path("<database_path>.db"), output=False)
 
 
 @table(database)
