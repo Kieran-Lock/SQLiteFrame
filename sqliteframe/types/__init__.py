@@ -1,3 +1,7 @@
+"""
+A subpackage containing all the data type logic for SQLiteFrame, including conversions between Python and SQLite types.
+"""
+
 from .integer import Integer
 from .type import Type
 from .string import String

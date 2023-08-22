@@ -1,7 +1,6 @@
 from __future__ import annotations
 from typing import Iterator
 from sqlite3 import Cursor
-from itertools import repeat
 if False:
     from typing import TypeVar
     from sqliteframe.entity import Column
