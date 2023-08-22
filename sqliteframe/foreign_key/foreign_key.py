@@ -69,11 +69,11 @@ class ForeignKey(Type[EncodedT, DecodedT]):
         return self.foreign_column.type.decode(encoded)
 
     @property
-    def encoded_type(self) -> object:
+    def encoded_type(self) -> type:
         return self.foreign_column.type.encoded_type
 
     @property
-    def decoded_type(self) -> object:
+    def decoded_type(self) -> type:
         return self.foreign_column.type.decoded_type
 
     def sql_restraint(self, column: Column) -> str:
