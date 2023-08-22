@@ -1,7 +1,15 @@
+"""
+The logic for storing integers with SQLiteFrame.
+"""
+
 from .type import Type
 
 
 class Integer(Type[int, int]):
+    """
+    The class which stores integers, converting between SQLite's INTEGER and Python's int types.
+    """
+
     def sql_name(self) -> str:
         return "INTEGER"
 

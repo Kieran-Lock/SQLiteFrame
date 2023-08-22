@@ -1,7 +1,15 @@
+"""
+The module containing logic for boolean types.
+"""
+
 from .type import Type
 
 
 class Boolean(Type[int, bool]):
+    """
+    Converts boolean to an integer (0 or 1), and stores as an SQLite NUMERIC, via type affinity.
+    """
+
     def sql_name(self) -> str:
         return "BOOLEAN"
 

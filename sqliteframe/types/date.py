@@ -1,8 +1,16 @@
+"""
+The logic for storing dates in SQLiteFrame.
+"""
+
 from datetime import date
 from .type import Type
 
 
 class Date(Type[int, date]):
+    """
+    For storing dates, by converting between SQLite's NUMERIC type and Python's datetime date type.
+    """
+
     def sql_name(self) -> str:
         return "DATE"
 

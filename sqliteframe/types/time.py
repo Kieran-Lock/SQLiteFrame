@@ -1,8 +1,16 @@
+"""
+The logic for storing times in SQLiteFrame.
+"""
+
 from datetime import time
 from .type import Type
 
 
 class Time(Type[str, time]):
+    """
+    For storing times, by converting between SQLite's NUMERIC type and Python's datetime time type.
+    """
+
     def sql_name(self) -> str:
         return "TIME"
 

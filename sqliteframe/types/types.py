@@ -1,3 +1,7 @@
+"""
+The module containing each of the different default types in SQLiteFrame as an Enum.
+"""
+
 from enum import Enum
 from .blob import Blob
 from .boolean import Boolean
