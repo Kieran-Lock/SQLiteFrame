@@ -2,17 +2,17 @@
 name = "SQLiteFrame"
 description = "A lightweight, zero-dependency ORM for SQLite in Python"
 readme = "README.md"
-version = "0.2.1"
+version = "0.2.2"
 authors = [
     { name = "Kieran Lock", email = "kieran.lock@outlook.com" }
 ]
 keywords = ["orm", "sqlite3", "schematics"]
 classifiers = [
     "License :: OSI Approved :: MIT License", 
-    "Programming Language :: Python :: 3.11", 
+    "Programming Language :: Python :: 3.8",
     "Intended Audience :: Developers"
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.8"
 license = {file = "LICENSE"}
 
 [build-system]
@@ -21,4 +21,5 @@ build-backend = "setuptools.build_meta"
 
 [project.urls]
 GitHub = "https://github.com/Kieran-Lock/SQLiteFrame"
-Documentation = "https://github.com/Kieran-Lock/SQLiteFrame/blob/master/DOCUMENTATION.md"
+Documentation = "https://sqliteframe-documentation.vercel.app/"
+License = "https://github.com/Kieran-Lock/SQLiteFrame/blob/master/LICENSE"

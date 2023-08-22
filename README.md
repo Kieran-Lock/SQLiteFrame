@@ -11,7 +11,7 @@
   <p align="center">
     A lightweight, zero-dependency ORM for SQLite in Python
     <br />
-    <a href="https://github.com/Kieran-Lock/SQLiteFrame/blob/master/DOCUMENTATION.md"><strong>Explore the docs »</strong></a>
+    <a href="https://sqliteframe-documentation.vercel.app/"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="#about-the-project">About the Project</a>
@@ -20,7 +20,7 @@
     ·
     <a href="#basic-usage">Basic Usage</a>
     ·
-    <a href="https://github.com/Kieran-Lock/SQLiteFrame/blob/master/DOCUMENTATION.md">Documentation</a>
+    <a href="https://sqliteframe-documentation.vercel.app/">Documentation</a>
     ·
     <a href="https://github.com/Kieran-Lock/SQLiteFrame/blob/master/LICENSE">License</a>
   </p>
@@ -165,7 +165,7 @@ SecondTableName.drop_table().execute()  # This entity is dropped first as it dep
 FirstTableName.drop_table().execute()  # Cannot drop this entity until the SecondTableName entity is dropped
 ```
 
-_For more examples and specific detail, please refer to the [Documentation](https://github.com/Kieran-Lock/SQLiteFrame/blob/master/DOCUMENTATION.md)_
+_For more examples and specific detail, please refer to the [Documentation](https://sqliteframe-documentation.vercel.app/)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
