@@ -1,3 +1,7 @@
+"""
+The module containing logic for CREATE TABLE statements.
+"""
+
 from __future__ import annotations
 from .statement import Statement
 if False:
@@ -5,7 +9,16 @@ if False:
 
 
 class CreateTable(Statement):
+    """
+    The class containing the logic for building and executing CREATE TABLE statements with SQLiteFrame.
+    """
+
     def __init__(self, table: Entity, columns: list[Column]):
+        """
+
+        :param table: The table this query is associated with
+        :param columns: The columns the table being created should have
+        """
         super().__init__(table.database)
         self.table = table
         self.columns = columns

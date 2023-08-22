@@ -1,3 +1,7 @@
+"""
+The module containing logic for DELETE FROM statements.
+"""
+
 from __future__ import annotations
 from .statement import Statement
 from ..where import Where, Condition
@@ -6,7 +10,14 @@ if False:
 
 
 class DeleteFrom(Statement):
+    """
+    The class containing the logic for building and executing DELETE FROM statements with SQLiteFrame.
+    """
+
     def __init__(self, table: Entity):
+        """
+        :param table: The table this query is associated with
+        """
         super().__init__(table.database)
         self.table = table
         self.where_statement = None
@@ -16,6 +27,13 @@ class DeleteFrom(Statement):
         return f"DELETE FROM {self.table}{where_section};"
 
     def where(self, where: Where | Condition) -> DeleteFrom:
+        """
+        A method to attach WHERE clauses onto the DELETE FROM statement
+
+        :param where: The WHERE clause to add to the statement
+        :return: A mutated version of this statement with the extended WHERE clause
+        """
+
         if self.where_statement is None:
             where.register(self)
             self.where_statement = where

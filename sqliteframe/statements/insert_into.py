@@ -1,3 +1,7 @@
+"""
+The module containing logic for INSERT INTO statements.
+"""
+
 from __future__ import annotations
 from .statement import Statement
 if False:
@@ -7,7 +11,15 @@ if False:
 
 
 class InsertInto(Statement):
+    """
+    The class containing the logic for building and executing INSERT INTO statements with SQLiteFrame.
+    """
+
     def __init__(self, table: Entity, data: dict[ColumnT, ColumnT.type.decoded_type]):
+        """
+        :param table: The table this query is associated with
+        :param data: A mapping of the column and corresponding data to insert into the given table
+        """
         super().__init__(table.database)
         self.table = table
         self.data = data.items()

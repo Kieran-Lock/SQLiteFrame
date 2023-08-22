@@ -1,3 +1,7 @@
+"""
+The module containing logic for SELECT statements.
+"""
+
 from __future__ import annotations
 from .statement import Statement
 from ..wildcards import Wildcards
@@ -9,7 +13,16 @@ if False:
 
 
 class Select(Statement):
+    """
+    The class containing the logic for building and executing SELECT statements with SQLiteFrame.
+    """
+
     def __init__(self, table: Entity, columns: list[Column | Wildcards], distinct: bool = False):
+        """
+        :param table: The table this query is associated with
+        :param columns: The column(s) to select from
+        :param distinct: Whether to select only non-duplicate (distinct) values
+        """
         super().__init__(table.database, yield_column_factory=lambda: self.columns)
         self.table = table
         if not filter(lambda column: column not in [wildcard.value for wildcard in Wildcards],
@@ -32,6 +45,13 @@ class Select(Statement):
                f"FROM {self.table}{join_section}{where_section}{order_by_section};"
 
     def where(self, where: Where | Condition) -> Select:
+        """
+        A method to attach WHERE clauses onto the SELECT statement
+
+        :param where: The WHERE clause to add to the statement
+        :return: A mutated version of this statement with the extended WHERE clause
+        """
+
         if self.where_statement is None:
             where.register(self)
             self.where_statement = where
@@ -40,6 +60,15 @@ class Select(Statement):
         return self
 
     def join(self, table: Entity, where: Where | Condition, join_type: JoinTypes = JoinTypes.INNER) -> Select:
+        """
+        A method to attach JOIN clauses onto the SELECT statement.
+
+        :param table: The table to join with
+        :param where: The WHERE clause to add to the statement
+        :param join_type: The way in which the tables should be joined
+        :return: A mutated version of this statement with the extended WHERE clause
+        """
+
         if Wildcards.All in self.passed_columns:
             self.columns = self.columns + table.columns if join_type == JoinTypes.LEFT else table.columns + self.columns
         else:
@@ -54,5 +83,12 @@ class Select(Statement):
 
     def order_by(self, column: Column,
                  order_types: OrderTypes | tuple[OrderTypes, ...] = OrderTypes.ASCENDING) -> Select:
+        """
+        A method to attach ORDER BY clauses onto the SELECT statement.
+
+        :param column: The target column to order by
+        :param order_types: The way in which the results should be ordered
+        :return: A mutated version of this statement with the extended ORDER BY clause
+        """
         self.order_by_statement = OrderBy(column, order_types)
         return self
