@@ -76,6 +76,13 @@ class TableName:
     third_column = Boolean(nullable=True)
 ```
 
+### Managing Connections
+Before you can interact with the tables you create, you must first connect to the database:
+```py
+with database.connection(commit=True)  # When the commit parameter is False, changes to the database will not be committed at the end of the context block
+    ...  # Execute any statements while a connection is open
+```
+
 ### Inserting Data
 To insert data into an existing table, use the following query template:
 ```py
@@ -84,14 +91,17 @@ insert_statement = TableName.insert_into({
     TableName.second_column: 1_000,
     TableName.third_column: True
 })
-insert_statement.execute()
+
+with database.connection():
+    insert_statement.execute()
 ```
 
 ### Fetching / Selecting Data
 Fetching / selecting data from an existing table with pre-inserted data is done as below:
 ```py
 select_statement = TableName.select(TableName.second_column, TableName.third_column)
-select_statement.execute()
+with database.connection():
+    select_statement.execute()
 ```
 
 ### Linking Tables (Foreign Keys)
@@ -132,7 +142,8 @@ select_statement = FirstTableName.select(SecondTableName.second_column, FirstTab
 ).order_by(
     FirstTableName.second_column, (OrderTypes.DESCENDING, OrderTypes.NULLS_FIRST)
 )
-select_statement.execute()
+with database.connection():
+    select_statement.execute()
 ```
 
 ### Editing Data
@@ -144,7 +155,8 @@ set_statement = FirstTableName.set({
 }).where(
     (Person.primary_key_column == "PrimaryKey1") & (Person.second_column > 500)  # Brackets are ESSENTIAL with complex where clauses, as these statements use bitwise operators, which often have unexpected operator precedence
 )
-set_statement.execute()
+with database.connection():
+    set_statement.execute()
 ```
 _NOTE: The where clause can be emitted from this statement, but this would update **every** record in the target table._
 
@@ -154,7 +166,8 @@ To delete pre-inserted table data, use the `delete_from` query:
 delete_statement = TableName.delete_from().where(
     (TableName.second_column <= 250)
 )
-delete_statement.execute()
+with database.connection():
+    delete_statement.execute()
 ```
 _NOTE: The where clause can be emitted from this statement, but this would delete **every** record in the target table._
 
@@ -163,8 +176,9 @@ Dropping tables does not delete the table reference from python - just in the SQ
   
 To entirely drop (delete) an existing table, use the `drop_table` statement:
 ```py
-SecondTableName.drop_table().execute()  # This entity is dropped first as it depends on the FirstTableName entity
-FirstTableName.drop_table().execute()  # Cannot drop this entity until the SecondTableName entity is dropped
+with database.connection():
+    SecondTableName.drop_table().execute()  # This entity is dropped first as it depends on the FirstTableName entity
+    FirstTableName.drop_table().execute()  # Cannot drop this entity until the SecondTableName entity is dropped
 ```
 
 _For more examples and specific detail, please refer to the [Documentation](https://sqliteframe-documentation.vercel.app/)_
