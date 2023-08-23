@@ -71,9 +71,10 @@ database = Database(Path("<database_path>.db"), output=False)  # When the output
 
 @table(database)
 class TableName:
-    primary_key_field = String(primary_key=True)
-    second_column = Integer
-    third_column = Boolean(nullable=True)
+    primary_key_field = String(primary_key=True)  # The primary key parameter is False by default
+    second_column = Integer  # If only the default options are required, no brackets are necessary either
+    third_column = Boolean(nullable=True)  # The nullable parameter is False by default
+    fourth_column = String(default="This is a default value.")  # You can also opt-in to giving columns default values like this
 ```
 
 ### Managing Connections
