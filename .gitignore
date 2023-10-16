@@ -4,3 +4,4 @@ poetry.lock
 .upm
 **/.replit
 **/replit.nix
+**/__pycache__/
