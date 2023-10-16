@@ -21,3 +21,7 @@ class Float(Type[float, float]):
 
     def default_suggestion(self, encoded: float) -> str:
         return str(encoded)
+    
+    def default_declaration(self, decoded: float) -> str:
+        return super().default_declaration(decoded)
+    

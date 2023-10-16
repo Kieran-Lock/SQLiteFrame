@@ -67,7 +67,7 @@ class Column:
 
         primary_key = " PRIMARY KEY" if self.is_primary_key else ""
         not_null = "" if self.is_nullable else " NOT NULL"
-        default = "" if self.default is None else f" DEFAULT {self.type.encode(self.default)}"
+        default = "" if self.default is None else f" DEFAULT {self.type.default_declaration(self.default)}"
         if self.is_foreign_key:
             return str(self.type)
         return f"{self.type.sql_name()}{primary_key}{not_null}{default}"

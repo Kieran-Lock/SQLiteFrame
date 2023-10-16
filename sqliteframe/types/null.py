@@ -21,3 +21,6 @@ class Null(Type[str, None]):
 
     def default_suggestion(self, encoded: str) -> str:
         return "None"
+
+    def default_declaration(self, decoded: None) -> str:
+        return super().default_declaration(decoded)

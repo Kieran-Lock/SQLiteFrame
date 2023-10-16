@@ -22,3 +22,7 @@ class Time(Type[str, time]):
 
     def default_suggestion(self, encoded: str) -> str:
         return f"time.fromisoformat({encoded})"
+
+    def default_declaration(self, decoded: time) -> str:
+        return super().default_declaration(decoded)
+    
