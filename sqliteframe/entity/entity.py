@@ -102,10 +102,11 @@ class Entity:
         :return: A generator which iterates each of the created Column objects
         """
 
-        column_information = list(filter(lambda member: not member[0].startswith("__"),
-                                         getmembers(table_, lambda member: not isroutine(member))))
-        for name, column in column_information:
-            yield self.amend_column(name, column)
+        members = table_.__ordered_members__.items() if hasattr(table_, "__ordered_members__") else getmembers(table_)
+        for name, member in members:
+            if name.startswith("__") or isroutine(member):
+                continue
+            yield self.amend_column(name, member)
 
     def amend_column(self, column_name: str, column_type: Type | type | ForeignKey) -> Column:
         """
