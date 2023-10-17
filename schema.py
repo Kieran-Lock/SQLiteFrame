@@ -1,4 +1,4 @@
-from sqliteframe import Database, table, String, Boolean, Date, Time, ForeignKey, Blob, Float, Integer, PreserveOrder
+from src.sqliteframe import Database, table, String, Boolean, Date, Time, ForeignKey, Blob, Float, Integer, PreserveOrder
 from datetime import date, time
 from pathlib import Path
 

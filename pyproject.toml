@@ -8,6 +8,7 @@ authors = [
 ]
 keywords = ["orm", "sqlite3", "schematics", "lightweight", "zero-dependency"]
 classifiers = [
+    "Development Status :: 3 - Alpha",
     "License :: OSI Approved :: MIT License", 
     "Programming Language :: Python :: 3.8",
     "Intended Audience :: Developers"
@@ -23,3 +24,9 @@ build-backend = "setuptools.build_meta"
 GitHub = "https://github.com/Kieran-Lock/SQLiteFrame"
 Documentation = "https://sqliteframe-documentation.vercel.app/"
 License = "https://github.com/Kieran-Lock/SQLiteFrame/blob/master/LICENSE"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"*" = ["**/*"]

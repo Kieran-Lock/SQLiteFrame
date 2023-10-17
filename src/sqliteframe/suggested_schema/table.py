@@ -3,7 +3,9 @@ The logic for suggesting a table when generating a suggested schema.
 """
 
 from typing import Generator
-from sqliteframe import Pragma, PragmaStatements, PragmaTypes, Database
+from ..pragma import PragmaStatements, PragmaTypes
+from ..statements import Pragma
+from ..database import Database
 from .column import Column
 from .fk_column import FKColumn
 

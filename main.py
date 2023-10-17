@@ -1,7 +1,7 @@
 from schema import Person, Car, database
 from pprint import pprint
 from datetime import date
-from sqliteframe import JoinTypes, OrderTypes
+from src.sqliteframe import JoinTypes, OrderTypes
 
 
 insert_person_1 = Person.insert_into({

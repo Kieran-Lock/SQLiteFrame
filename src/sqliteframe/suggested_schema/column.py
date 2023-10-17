@@ -2,7 +2,8 @@
 The module containing logic for columns when suggesting schemas.
 """
 
-from sqliteframe import FKRestraints, Types
+from ..foreign_key import Restraints as FKRestraints
+from ..types import Types
 from .unknown_type import UnknownType
 
 

@@ -2,7 +2,7 @@
 The logic for generating an entire suggested schema.
 """
 
-from sqliteframe import Database
+from ..database import Database
 from sqlite3 import Cursor
 from .table import Table
 
