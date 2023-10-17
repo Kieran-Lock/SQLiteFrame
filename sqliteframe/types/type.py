@@ -129,3 +129,14 @@ class Type(Generic[EncodedT, DecodedT], ABC):
         """
 
         return ""
+
+    @abstractmethod
+    def default_declaration(self, decoded: DecodedT) -> str:
+        """
+        The method that defines how the data of this type should be formatted when declaring a default value for a column.
+
+        :param decoded: The non-encoded data as a Python type
+        :return: The string representing the data as a default value declaration
+        """
+        
+        return str(self.encode(decoded))

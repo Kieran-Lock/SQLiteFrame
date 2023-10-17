@@ -24,3 +24,6 @@ class Date(Type[int, date]):
         iso_formatted = date.fromordinal(int(encoded)).isoformat()
         joined = ", ".join(number.lstrip("0") for number in iso_formatted.split("-"))
         return f"date({joined})"
+
+    def default_declaration(self, decoded: date) -> str:
+        return super().default_declaration(decoded)

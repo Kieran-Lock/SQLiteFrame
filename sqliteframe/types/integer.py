@@ -21,3 +21,7 @@ class Integer(Type[int, int]):
 
     def default_suggestion(self, encoded: int) -> str:
         return str(encoded)
+
+    def default_declaration(self, decoded: int) -> str:
+        return super().default_declaration(decoded)
+    

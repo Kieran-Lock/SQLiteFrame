@@ -21,3 +21,6 @@ class Boolean(Type[int, bool]):
 
     def default_suggestion(self, encoded: int) -> str:
         return str(bool(encoded))
+
+    def default_declaration(self, decoded: bool) -> str:
+        return super().default_declaration(decoded)

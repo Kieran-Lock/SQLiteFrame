@@ -98,3 +98,6 @@ class ForeignKey(Type[EncodedT, DecodedT]):
 
     def default_suggestion(self, encoded: EncodedT) -> str:
         return "ForeignKey"
+
+    def default_declaration(self, decoded: DecodedT) -> str:
+        return super().default_declaration(decoded)

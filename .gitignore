@@ -1,2 +1,8 @@
 docs.py
 database.db
+poetry.lock
+.upm
+**/.replit
+**/replit.nix
+**/__pycache__/
+.pythonlibs/

@@ -17,7 +17,10 @@ class Blob(Type[str, bytes]):
         return encoded.encode()
 
     def encode(self, decoded: bytes) -> str:
-        return f"\"{decoded.decode()}\""
+        return decoded.decode()
 
     def default_suggestion(self, encoded: bytes) -> str:
         return f"b{encoded}"
+
+    def default_declaration(self, decoded: bytes) -> str:
+        return f"\"{decoded.decode()}\""

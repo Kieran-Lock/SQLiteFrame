@@ -9,7 +9,7 @@ SQLite's connection and cursor system with a single context manager.
 """
 
 from .database import Database
-from .entity import table
+from .entity import table, PreserveOrder
 from .types import Integer, String, Type, Boolean, Date, Time, Blob, Float, Types
 from .wildcards import Wildcards
 from .foreign_key import ForeignKey, Restraints as FKRestraints

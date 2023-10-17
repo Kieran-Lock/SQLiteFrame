@@ -1,4 +1,4 @@
-from sqliteframe import Database, table, String, Boolean, Date, Time, ForeignKey, Blob, Float, Integer
+from sqliteframe import Database, table, String, Boolean, Date, Time, ForeignKey, Blob, Float, Integer, PreserveOrder
 from datetime import date, time
 from pathlib import Path
 
@@ -7,7 +7,7 @@ database = Database(Path("./database.db"), output=True)
 
 
 @table(database)
-class Person:
+class Person(PreserveOrder):
     national_insurance_number = String(primary_key=True)
     first_name = String
     last_name = String
@@ -15,7 +15,7 @@ class Person:
 
 
 @table(database)
-class Car:
+class Car(PreserveOrder):
     number_plate = String(primary_key=True)
     name = String
     brand = String(default="Unknown")
